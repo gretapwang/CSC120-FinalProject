@@ -21,10 +21,6 @@ public class Player{
         this.batteryLevel += power;
     }
 
-    public ArrayList<Grabbable> getInventory(){
-        return this.inventory;
-    }
-
     public void addToInventory(Grabbable item){
         if (this.inventory.contains(item)){
             throw new RuntimeException("The item is already in inventory.");
@@ -38,6 +34,12 @@ public class Player{
             this.inventory.remove(item);
         } else{
             throw new RuntimeException("The item is not in the inventory.");
+        }
+    }
+
+    public void checkIfInInventory(Grabbable item){
+        if (!this.inventory.contains(item)){
+            throw new RuntimeException("You are not holding this item.");
         }
     }
 
@@ -55,17 +57,19 @@ public class Player{
 
     public void arrive(Location newLocation){
         this.activeLocation = newLocation;
-        //get and print message
+        newLocation.printArrivalMessage();
     }
 
 
 
     public static void main(String[] args){
-        Location startingRoom = new Location();
-        Location monsterRoom = new Location();
-        Location resourceRoom = new Location();
-        Location prizeRoom = new Location();
+        Location startingRoom = new Location("starting room intro message", "starting room return message");
+        Location monsterRoom = new Location("monster room intro message", "monster room return message");
+        Location resourceRoom = new Location("resource room intro message", "resource room return message");
+        Location prizeRoom = new Location("prize room intro message", "prize room return message");
         Player player = new Player(startingRoom);
+        Flashlight flashlight = new Flashlight();
+        player.addToInventory(flashlight);
         System.out.println("You are in a dark room. It appears to be a cave. To the south and west, there are dark passages - you hear faint noises to the south. Some vague footprints trail off to the east, and there appears to be light in the distance. To the north is a wall. \n You are holding a flashlight, which is off.");
         System.out.println(player);
         System.out.println("At any time, type 'help' to see your options.");
@@ -80,9 +84,13 @@ public class Player{
                     } else{
                         throw new RuntimeException("There is no path in that direction.");
                     }
-                } else if (){
-
-                }
+                } else if (userInput.equals("turn on flashlight")){
+                    player.checkIfInInventory(flashlight);
+                    flashlight.turnOn();
+                } else if (userInput.equals("turn off flashlight")){
+                    player.checkIfInInventory(flashlight);
+                    flashlight.turnOff();
+                } // add rest of commands
             } catch (Exception e){
                 System.out.println(e.getLocalizedMessage());
             }

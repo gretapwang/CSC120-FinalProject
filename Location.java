@@ -6,6 +6,13 @@ public class Location {
     private Location southAdjacent;
     private ArrayList<Grabbable> inventory;
     private boolean hasBeenVisited;
+    private String initialMessage;
+    private String returnMessage;
+
+    public Location(String initialMessage, String returnMessage){
+        this.initialMessage = initialMessage;
+        this.returnMessage = returnMessage;
+    }
 
     public Location getNewLocation(String command){
         if (command.equals("go east")){
@@ -20,4 +27,11 @@ public class Location {
             throw new RuntimeException("Invalid command.");
         }
     }
+
+    public void printArrivalMessage(){
+        if (this.hasBeenVisited){
+
+        }
+    }
+
 }
