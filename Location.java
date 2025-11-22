@@ -30,7 +30,10 @@ public class Location {
 
     public void printArrivalMessage(){
         if (this.hasBeenVisited){
-
+            System.out.println(this.returnMessage);
+        } else{
+            System.out.println(this.initialMessage);
+            this.hasBeenVisited = true;
         }
     }
 

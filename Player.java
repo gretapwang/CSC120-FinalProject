@@ -55,11 +55,14 @@ public class Player{
         System.out.println("Here are your available commands: \n go [east/south/west/north] \n turn [on/off] flashlight \n pick up [supply] \n put down [supply] \n eat [food] \n drink water \n kill monster");
     }
 
-    public void arrive(Location newLocation){
+    public void arrive(Location newLocation, boolean lightOn){
         this.activeLocation = newLocation;
-        newLocation.printArrivalMessage();
+        if (lightOn){
+            newLocation.printArrivalMessage();
+        } else{
+            System.out.println("You've arrived somewhere, but it's too dark to see. You need to turn your flashlight on.");
+        }
     }
-
 
 
     public static void main(String[] args){
@@ -80,7 +83,7 @@ public class Player{
                 if (userInput.equals("go east") || userInput.equals("go west") || userInput.equals("go south") || userInput.equals("go north")){
                     Location newLocation = player.activeLocation.getNewLocation(userInput);
                     if (newLocation != null){
-                        player.arrive(newLocation);
+                        player.arrive(newLocation, flashlight.isOn());
                     } else{
                         throw new RuntimeException("There is no path in that direction.");
                     }

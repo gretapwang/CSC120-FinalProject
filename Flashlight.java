@@ -5,6 +5,10 @@ public class Flashlight extends Grabbable {
         this.isOn = false;
     }
 
+    public boolean isOn(){
+        return this.isOn;
+    }
+
     public void turnOn(){
         if (this.isOn){
             throw new RuntimeException("The flashlight is already on.");
