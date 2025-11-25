@@ -28,7 +28,7 @@ public class Location {
         }
     }
 
-    public void printArrivalMessage(){
+    public void printArrivalMessage(){//
         if (this.hasBeenVisited){
             System.out.println(this.returnMessage);
         } else{

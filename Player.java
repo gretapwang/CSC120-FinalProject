@@ -6,7 +6,7 @@ public class Player{
     private ArrayList<Grabbable> inventory;
     private Location activeLocation;
     private boolean isLost;
-    private boolean isWon;
+    private boolean isWon; // can we make this maybe "hasWon" or just "won"
 
     public Player(Location activeLocation){
         this.energy = 100;
@@ -17,7 +17,7 @@ public class Player{
         this.isWon = false;
     }
 
-    public void replenishBatteryLevel(int power){
+    public void replenishBatteryLevel(int power){// energy limit
         this.batteryLevel += power;
     }
 
@@ -35,7 +35,7 @@ public class Player{
         } else{
             throw new RuntimeException("The item is not in the inventory.");
         }
-    }
+    }// Combine this two methods
 
     public void checkIfInInventory(Grabbable item){
         if (!this.inventory.contains(item)){
@@ -44,7 +44,7 @@ public class Player{
     }
 
     public Location getActiveLocation(){
-        return this.activeLocation;
+        return this.activeLocation;                                                                                                                                                                                              
     }
 
     public String toString(){
@@ -57,7 +57,7 @@ public class Player{
 
     public void arrive(Location newLocation, boolean lightOn){
         this.activeLocation = newLocation;
-        if (lightOn){
+        if (lightOn){// Call by flashlight method like flashlight.ison()
             newLocation.printArrivalMessage();
         } else{
             System.out.println("You've arrived somewhere, but it's too dark to see. You need to turn your flashlight on.");
@@ -94,6 +94,10 @@ public class Player{
                     player.checkIfInInventory(flashlight);
                     flashlight.turnOff();
                 } // add rest of commands
+                else if( userInput.equals("help")){
+                    player.help();
+                }
+                // I think the next thing to do is to go and write some codes specifically that will comply with each associated location. 
             } catch (Exception e){
                 System.out.println(e.getLocalizedMessage());
             }
