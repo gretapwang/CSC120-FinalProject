@@ -71,7 +71,7 @@ public class Player{
         Location resourceRoom = new Location("resource room intro message", "resource room return message");
         Location prizeRoom = new Location("prize room intro message", "prize room return message");
         Player player = new Player(startingRoom);
-        Flashlight flashlight = new Flashlight();
+        Flashlight flashlight = new Flashlight("flashlight");
         player.addToInventory(flashlight);
         System.out.println("You are in a dark room. It appears to be a cave. To the south and west, there are dark passages - you hear faint noises to the south. Some vague footprints trail off to the east, and there appears to be light in the distance. To the north is a wall. \n You are holding a flashlight, which is off.");
         System.out.println(player);

@@ -37,4 +37,20 @@ public class Location {
         }
     }
 
+    public void addToInventory(Grabbable item){
+        if (this.inventory.contains(item)){
+            throw new RuntimeException("The item is already in inventory.");
+        } else{
+            this.inventory.add(item);
+        }
+    }
+
+    public void removeFromInventory(Grabbable item){
+        if (this.inventory.contains(item)){
+            this.inventory.remove(item);
+        } else{
+            throw new RuntimeException("The item is not in the inventory.");
+        }
+    }
+
 }

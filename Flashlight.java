@@ -1,7 +1,8 @@
 public class Flashlight extends Grabbable {
     private boolean isOn;
 
-    public Flashlight(){
+    public Flashlight(String name){
+        super(name);
         this.isOn = false;
     }
 
