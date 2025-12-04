@@ -1,8 +1,4 @@
-
-import java.util.ArrayList;
-
 abstract class Grabbable { 
-    protected ArrayList<String>Inventory;
     protected String name;
 
     public Grabbable(String name){
