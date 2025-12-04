@@ -32,6 +32,10 @@ public class Location {
         return this.numMonsters;
     }
 
+    public void visit(){
+        this.hasBeenVisited = true;
+    }
+
     public Location getNewLocation(String command){
         if (command.equals("go east")){
             return this.eastAdjacent;
@@ -46,7 +50,7 @@ public class Location {
         }
     }
 
-    public void printArrivalMessage(){//
+    public void printArrivalMessage(){
         if (this.hasBeenVisited){
             System.out.println(this.returnMessage);
         } else{

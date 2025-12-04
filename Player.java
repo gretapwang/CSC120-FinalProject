@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Player{
     private int energy;
-    private int batteryLevel;
     private ArrayList<Grabbable> inventory;
     private Location activeLocation;
     private boolean hasLost;
@@ -10,15 +9,11 @@ public class Player{
 
     public Player(Location activeLocation){
         this.energy = 100;
-        this.batteryLevel = 50;
         this.inventory = new ArrayList<Grabbable>();
         this.activeLocation = activeLocation;
+        activeLocation.visit();
         this.hasLost = false;
         this.hasWon = false;
-    }
-
-    public void replenishBatteryLevel(int power){// energy limit
-        this.batteryLevel += power;
     }
 
     public void addToInventory(Grabbable item){
@@ -37,9 +32,11 @@ public class Player{
         }
     }// Combine this two methods
 
-    public void checkIfInInventory(Grabbable item){
-        if (!this.inventory.contains(item)){
-            throw new RuntimeException("You are not holding this item.");
+    public boolean isHolding(Grabbable item){
+        if (this.inventory.contains(item)){
+            return true;
+        } else{
+            return false;
         }
     }
 
@@ -48,25 +45,27 @@ public class Player{
     }
 
     public String toString(){
-        return ("Your energy level is at " + this.energy + " and your flashlight battery is at " + this.batteryLevel);
+        return ("Your energy level is at " + this.energy + ".");
     }
 
     public void help(){
         System.out.println("Here are your available commands: \n go [east/south/west/north] \n turn [on/off] flashlight \n pick up [supply] \n put down [supply] \n eat [food] \n drink water \n kill monster");
     }
 
-    public void arrive(Location newLocation, boolean lightOn){
+    public void arrive(Location newLocation, Flashlight flashlight){
         this.activeLocation = newLocation;
-        if (lightOn){// Call by flashlight method like flashlight.ison()
+        if (this.isHolding(flashlight) && flashlight.isOn()){
             newLocation.printArrivalMessage();
-        } else{
+        } else if (this.isHolding(flashlight)){
             System.out.println("You've arrived somewhere, but it's too dark to see. You need to turn your flashlight on.");
+        } else{
+            System.out.println("You've arrived somewhere, but you're not holding your flashlight. You need to find it and pick it up.");
         }
     }
 
-    public void updateGameStatus(){
+    public void updateGameStatus(Flashlight flashlight){
         // if outside and holding treasure, hasWon = true, else
-        if (this.energy == 0 || this.batteryLevel == 0){
+        if (this.energy == 0 || flashlight.getBatteryLevel() == 0){
             this.hasLost = true;
         }
     }
@@ -82,6 +81,7 @@ public class Player{
         player.addToInventory(flashlight);
         System.out.println("You are in a dark room. It appears to be a cave. To the south and west, there are dark passages - you hear faint noises to the south. Some vague footprints trail off to the east, and there appears to be light in the distance. To the north is a wall. \n You are holding a flashlight, which is off.");
         System.out.println(player);
+        System.out.println(flashlight);
         System.out.println("At any time, type 'help' to see your options.");
         Scanner input = new Scanner(System.in);
 
@@ -91,16 +91,18 @@ public class Player{
                 if (userInput.equals("go east") || userInput.equals("go west") || userInput.equals("go south") || userInput.equals("go north")){
                     Location newLocation = player.activeLocation.getNewLocation(userInput);
                     if (newLocation != null){
-                        player.arrive(newLocation, flashlight.isOn());
+                        player.arrive(newLocation, flashlight);
                     } else{
                         throw new RuntimeException("There is no path in that direction.");
                     }
                 } else if (userInput.equals("turn on flashlight")){
-                    player.checkIfInInventory(flashlight);
-                    flashlight.turnOn();
+                    if (player.isHolding(flashlight)){
+                        flashlight.turnOn();
+                    }
                 } else if (userInput.equals("turn off flashlight")){
-                    player.checkIfInInventory(flashlight);
-                    flashlight.turnOff();
+                    if (player.isHolding(flashlight)){
+                        flashlight.turnOff();
+                    }
                 } // add rest of commands
                 else if( userInput.equals("help")){
                     player.help();
@@ -110,7 +112,8 @@ public class Player{
                 System.out.println(e.getLocalizedMessage());
             }
             System.out.println(player);
-            player.updateGameStatus();
+            System.out.println(flashlight);
+            player.updateGameStatus(flashlight);
         } while (!player.hasLost && !player.hasWon);
     }
 }
