@@ -5,16 +5,16 @@ public class Player{
     private int batteryLevel;
     private ArrayList<Grabbable> inventory;
     private Location activeLocation;
-    private boolean isLost;
-    private boolean isWon; // can we make this maybe "hasWon" or just "won"
+    private boolean hasLost;
+    private boolean hasWon;
 
     public Player(Location activeLocation){
         this.energy = 100;
         this.batteryLevel = 50;
         this.inventory = new ArrayList<Grabbable>();
         this.activeLocation = activeLocation;
-        this.isLost = false;
-        this.isWon = false;
+        this.hasLost = false;
+        this.hasWon = false;
     }
 
     public void replenishBatteryLevel(int power){// energy limit
@@ -23,7 +23,7 @@ public class Player{
 
     public void addToInventory(Grabbable item){
         if (this.inventory.contains(item)){
-            throw new RuntimeException("The item is already in inventory.");
+            throw new RuntimeException("You're already holding the " + item.getName() + ".");
         } else{
             this.inventory.add(item);
         }
@@ -33,7 +33,7 @@ public class Player{
         if (this.inventory.contains(item)){
             this.inventory.remove(item);
         } else{
-            throw new RuntimeException("The item is not in the inventory.");
+            throw new RuntimeException("You're not holding the " + item.getName() + ".");
         }
     }// Combine this two methods
 
@@ -64,6 +64,13 @@ public class Player{
         }
     }
 
+    public void updateGameStatus(){
+        // if outside and holding treasure, hasWon = true, else
+        if (this.energy == 0 || this.batteryLevel == 0){
+            this.hasLost = true;
+        }
+    }
+
 
     public static void main(String[] args){
         Location startingRoom = new Location("starting room intro message", "starting room return message");
@@ -77,8 +84,9 @@ public class Player{
         System.out.println(player);
         System.out.println("At any time, type 'help' to see your options.");
         Scanner input = new Scanner(System.in);
-        while (!player.isLost && !player.isWon){
-            String userInput = input.nextLine();
+
+        do{
+            String userInput = input.nextLine().toLowerCase();
             try{
                 if (userInput.equals("go east") || userInput.equals("go west") || userInput.equals("go south") || userInput.equals("go north")){
                     Location newLocation = player.activeLocation.getNewLocation(userInput);
@@ -101,6 +109,8 @@ public class Player{
             } catch (Exception e){
                 System.out.println(e.getLocalizedMessage());
             }
-        }
+            System.out.println(player);
+            player.updateGameStatus();
+        } while (!player.hasLost && !player.hasWon);
     }
 }

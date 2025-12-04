@@ -5,6 +5,10 @@ abstract class Grabbable {
         this.name = name;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
     public void pickUp(Player player, Location location){
         player.addToInventory(this);
         location.removeFromInventory(this);
