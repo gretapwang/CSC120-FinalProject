@@ -1,12 +1,21 @@
 public class Monsters {
-    String monsterType;
     int number;
-    // Mosters can be called by their types and numbers
-    public Monsters(String monType, int num){
-        this.monsterType=monType;
-        this.number=num;
 
+    public Monsters(int num){
+        if (num < 0){
+            throw new RuntimeException("Cannot have a negative number of monsters.");
+        }
+        this.number=num;
     }
-    // I do not really think that the monster is required to have methods but player can kill the monster.
-    // methods can be included in player file.
+
+    public int getNum(){
+        return this.number;
+    }
+
+    public void die(int numKilled){
+        if (numKilled > this.number){
+            throw new RuntimeException("You don't have this many monsters left to kill.");
+        }
+        this.number -= numKilled;
+    }
 }
