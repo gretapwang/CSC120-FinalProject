@@ -4,14 +4,32 @@ public class Location {
     private Location westAdjacent;
     private Location northAdjacent;
     private Location southAdjacent;
-    private ArrayList<Grabbable> inventory;
-    private boolean hasBeenVisited;
     private String initialMessage;
     private String returnMessage;
+    private ArrayList<Grabbable> inventory;
+    private boolean hasBeenVisited;
+    private int numMonsters;
+
+    public Location(String initialMessage, String returnMessage, int numMonsters){
+        if (numMonsters < 0){
+            throw new RuntimeException("Cannot initialize a negative number of monsters.");
+        }
+        this.initialMessage = initialMessage;
+        this.returnMessage = returnMessage;
+        this.inventory = new ArrayList<Grabbable>();
+        this.hasBeenVisited = false;
+        this.numMonsters = numMonsters;
+    }
 
     public Location(String initialMessage, String returnMessage){
         this.initialMessage = initialMessage;
         this.returnMessage = returnMessage;
+        this.inventory = new ArrayList<Grabbable>();
+        this.hasBeenVisited = false;
+    }
+
+    public int getNumMonsters(){
+        return this.numMonsters;
     }
 
     public Location getNewLocation(String command){
@@ -53,4 +71,10 @@ public class Location {
         }
     }
 
+    public void killMonsters(int numKilled){
+        if (numKilled > this.numMonsters){
+            throw new RuntimeException("There aren't " + numKilled + " monsters here to kill.");
+        }
+        this.numMonsters -= numKilled;
+    }
 }
