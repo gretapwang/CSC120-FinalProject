@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 public class Player{
     private int energy;
@@ -142,20 +143,65 @@ public class Player{
             try{
                 if (userInput.equals("go east") || userInput.equals("go west") || userInput.equals("go south") || userInput.equals("go north")){
                     player.arrive(map.getNewLocation(player.activeLocation, userInput), flashlight);
+
                 } else if (userInput.equals("turn on flashlight")){
-                    if (player.isHolding(flashlight)){
-                        flashlight.turnOn();
+                    if(player.isHolding(flashlight)){
+                        flashlight.turnOn();// turning on the flashlight
+                        System.out.println("The flashlight is now on");//the flashlight is on, but nothing else is orientating them. 
+
+                        player.arrive(player.getActiveLocation(), flashlight);// reprint the arrival message
+                        }
                     }
-                } else if (userInput.equals("turn off flashlight")){
+                else if (userInput.equals("turn off flashlight")){
                     if (player.isHolding(flashlight)){
                         flashlight.turnOff();
                     }
                 } // add rest of commands
                 else if( userInput.equals("help")){
                     player.help();
+
                 }
+                else if(userInput.equals("pick up food")){
+                    player.pickUp(new Grabbable("food"));
+                }
+                else if(userInput.equals("pick up water")){
+                    player.pickUp(new Grabbable("water"));
+                }
+                else if(userInput.equals("kill monsters")){
+                    if (player.activeLocation== monsterRoom){
+                       // monsterRoom.killMonsters(num); we need to discuss about this
+                    if (player.isHolding(knife)){
+                        System.out.println("ooh how many do you want to kill?");
+                        int a=Integer.parseInt(userInput);
+                        monsterRoom.killMonsters(a);}
+                        else{
+                            System.out.println("There are no monsters here to kill. Try another command to keep playing");
+
+                        }
+                    }
+                }
+                else if( userInput.equals("pick up treasure")){
+                    player.pickUp(treasure);
+                    Random rand = new Random();
+                    int b= rand.nextInt(96) + 5; 
+                
+                    player.activeLocation.setNumMonsters(b);
+                    /// Need to  modify this so that once player picks up the treasures, then the monsters appeas and player needs to kill them.
+
+                }
+                else if( userInput.equals("pick up knife")){
+                    player.pickUp(knife);
+                }
+                //puting down grabbables commands
+                else if( userInput.equals("put down treasure")){
+                    player.putDown(treasure);
+                }
+                else if( userInput.equals("put down knife")){
+                    player.putDown(knife);
+                }
+            
                 else{
-                    System.out.println("We do not understand what you said. Try Again");
+                    System.out.println("We do not understand what you said. Try Again ");
                 }
             
                 // I think the next thing to do is to go and write some codes specifically that will comply with each associated location. 

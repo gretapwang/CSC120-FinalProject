@@ -26,6 +26,9 @@ public class Location {
     public int getNumMonsters(){
         return this.numMonsters;
     }
+    public void setNumMonsters(int num){//diane added this since we needed 
+        this.numMonsters = num;
+    }
 
     public boolean isOutside(){
         return this.isOutside;
