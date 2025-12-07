@@ -1,53 +1,38 @@
 import java.util.ArrayList;
 public class Location {
-    private Location eastAdjacent;
-    private Location westAdjacent;
-    private Location northAdjacent;
-    private Location southAdjacent;
     private String initialMessage;
     private String returnMessage;
     private ArrayList<Grabbable> inventory;
     private boolean hasBeenVisited;
     private int numMonsters;
+    private boolean isOutside;
 
-    public Location(String initialMessage, String returnMessage, int numMonsters){
+    public Location(String initialMessage, String returnMessage, boolean isOutside, int numMonsters){
         if (numMonsters < 0){
             throw new RuntimeException("Cannot initialize a negative number of monsters.");
         }
         this.initialMessage = initialMessage;
         this.returnMessage = returnMessage;
+        this.isOutside = isOutside;
+        this.numMonsters = numMonsters;
         this.inventory = new ArrayList<Grabbable>();
         this.hasBeenVisited = false;
-        this.numMonsters = numMonsters;
     }
 
-    public Location(String initialMessage, String returnMessage){
-        this.initialMessage = initialMessage;
-        this.returnMessage = returnMessage;
-        this.inventory = new ArrayList<Grabbable>();
-        this.hasBeenVisited = false;
+    public Location(String initialMessage, String returnMessage, boolean isOutside){
+        this(initialMessage, returnMessage, isOutside, 0);
     }
 
     public int getNumMonsters(){
         return this.numMonsters;
     }
 
-    public void visit(){
-        this.hasBeenVisited = true;
+    public boolean isOutside(){
+        return this.isOutside;
     }
 
-    public Location getNewLocation(String command){
-        if (command.equals("go east")){
-            return this.eastAdjacent;
-        } else if (command.equals("go west")){
-            return this.westAdjacent;
-        } else if (command.equals("go north")){
-            return this.northAdjacent;
-        } else if (command.equals("go south")){
-            return this.southAdjacent;
-        } else{
-            throw new RuntimeException("Invalid command.");
-        }
+    public void visit(){
+        this.hasBeenVisited = true;
     }
 
     public void printArrivalMessage(){
@@ -59,8 +44,12 @@ public class Location {
         }
     }
 
+    public boolean hasInInventory(Grabbable item){
+        return this.inventory.contains(item);
+    }
+
     public void addToInventory(Grabbable item){
-        if (this.inventory.contains(item)){
+        if (this.hasInInventory(item)){
             throw new RuntimeException("The item is already in inventory.");
         } else{
             this.inventory.add(item);
@@ -68,7 +57,7 @@ public class Location {
     }
 
     public void removeFromInventory(Grabbable item){
-        if (this.inventory.contains(item)){
+        if (this.hasInInventory(item)){
             this.inventory.remove(item);
         } else{
             throw new RuntimeException("The item is not in the inventory.");
