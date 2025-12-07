@@ -154,6 +154,10 @@ public class Player{
                 else if( userInput.equals("help")){
                     player.help();
                 }
+                else{
+                    System.out.println("We do not understand what you said. Try Again");
+                }
+            
                 // I think the next thing to do is to go and write some codes specifically that will comply with each associated location. 
             } catch (Exception e){
                 System.out.println(e.getLocalizedMessage());
