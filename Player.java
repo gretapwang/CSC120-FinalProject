@@ -181,13 +181,11 @@ public class Player{
                     }
                 }
                 else if( userInput.equals("pick up treasure")){
-                    player.pickUp(treasure);
-                    Random rand = new Random();
-                    int b= rand.nextInt(96) + 5; 
-                
-                    player.activeLocation.setNumMonsters(b);
-                    /// Need to  modify this so that once player picks up the treasures, then the monsters appeas and player needs to kill them.
-
+                    if (player.getActiveLocation().getNumMonsters() == 0){
+                        player.pickUp(treasure);
+                    } else{
+                        throw new RuntimeException("You have to kill the monsters before you can pick up the treasure.");
+                    }
                 }
                 else if( userInput.equals("pick up knife")){
                     player.pickUp(knife);
