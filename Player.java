@@ -210,5 +210,11 @@ public class Player{
             System.out.println(flashlight);
             player.updateGameStatus(flashlight, treasure);
         } while (!player.hasLost && !player.hasWon);
+        if (player.hasWon){
+            System.out.println("Congratulations, you won! You have escaped with the treasure.");
+        } else{
+            System.out.println("You lost. You ran out of resources before esceping with the treasure.");
+        }
+        input.close();
     }
 }
