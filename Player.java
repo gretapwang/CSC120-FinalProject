@@ -168,7 +168,7 @@ public class Player{
                     player.pickUp(new Grabbable("water"));
                 }
                 else if(userInput.equals("kill monsters")){
-                    if (player.activeLocation== monsterRoom){
+                    if (player.activeLocation== monsterRoom){//player.getActiveLocation().getNumberNumMonsters()!==0
                        // monsterRoom.killMonsters(num); we need to discuss about this
                     if (player.isHolding(knife)){
                         System.out.println("ooh how many do you want to kill?");
