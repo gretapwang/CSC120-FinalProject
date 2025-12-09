@@ -41,6 +41,9 @@ public class Location {
     public void printArrivalMessage(){
         if (this.hasBeenVisited){
             System.out.println(this.returnMessage);
+            if (this.numMonsters > 0){
+                System.out.println("There are " + this.numMonsters + " remaining here.");
+            }
         } else{
             System.out.println(this.initialMessage);
             this.hasBeenVisited = true;

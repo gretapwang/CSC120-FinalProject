@@ -4,7 +4,7 @@ public class Flashlight extends Grabbable {
 
     public Flashlight(String name){
         super(name);
-        this.batteryLevel = 100;
+        this.batteryLevel = 50;
         this.isOn = false;
     }
     
