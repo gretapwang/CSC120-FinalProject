@@ -147,8 +147,6 @@ public class Player{
                 } else if (userInput.equals("turn on flashlight")){
                     if(player.isHolding(flashlight)){
                         flashlight.turnOn();// turning on the flashlight
-                        System.out.println("The flashlight is now on");//the flashlight is on, but nothing else is orientating them. 
-
                         player.arrive(player.getActiveLocation(), flashlight);// reprint the arrival message
                         }
                     }
@@ -175,7 +173,7 @@ public class Player{
                         int a=Integer.parseInt(userInput);
                         monsterRoom.killMonsters(a);}
                         else{
-                            System.out.println("There are no monsters here to kill. Try another command to keep playing");
+                            throw new RuntimeException("There are no monsters here to kill. Try another command to keep playing");
 
                         }
                     }
@@ -199,16 +197,18 @@ public class Player{
                 }
             
                 else{
-                    System.out.println("We do not understand what you said. Try Again ");
+                    throw new RuntimeException("We do not understand what you said. Try Again ");
                 }
-            
-                // I think the next thing to do is to go and write some codes specifically that will comply with each associated location. 
+                
+                if (flashlight.isOn()){
+                    flashlight.updateBatteryLevel(-1);
+                }
+                System.out.println(player);
+                System.out.println(flashlight);
+                player.updateGameStatus(flashlight, treasure);
             } catch (Exception e){
                 System.out.println(e.getLocalizedMessage());
             }
-            System.out.println(player);
-            System.out.println(flashlight);
-            player.updateGameStatus(flashlight, treasure);
         } while (!player.hasLost && !player.hasWon);
         if (player.hasWon){
             System.out.println("Congratulations, you won! You have escaped with the treasure.");

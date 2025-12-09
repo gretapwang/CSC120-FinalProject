@@ -30,12 +30,14 @@ public class Flashlight extends Grabbable {
             throw new RuntimeException("The flashlight is already on.");
         } else{
             this.isOn = true;
+            System.out.println("The flashlight is now on.");
         }
     }
 
     public void turnOff(){
         if (this.isOn){
             this.isOn = false;
+            System.out.println("The flashlight is now off.");
         } else{
             throw new RuntimeException("The flashlight is already off.");
         }
