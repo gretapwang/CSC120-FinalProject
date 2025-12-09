@@ -2,14 +2,18 @@ public class Flashlight extends Grabbable {
     private int batteryLevel;
     private boolean isOn;
 
-    public Flashlight(String name){
+    public Flashlight(String name, int batteryLevel){
         super(name);
-        this.batteryLevel = 50;
+        this.batteryLevel = batteryLevel;
         this.isOn = false;
     }
     
     public int getBatteryLevel(){
         return this.batteryLevel;
+    }
+
+    public void setBatteryLevel(int newBatteryLevel){
+        this.batteryLevel = newBatteryLevel;
     }
 
     public void updateBatteryLevel(int changeInBattery){

@@ -87,6 +87,19 @@ public class Player{
         }
     }
 
+    public void changeFlashlightBattery(Flashlight flashlight, Battery battery){
+        if (this.isHolding(flashlight)){
+            if (this.isHolding(battery)){
+                flashlight.setBatteryLevel(battery.getPower());
+                this.removeFromInventory(battery);
+            } else{
+                throw new RuntimeException("You are not holding a battery.");
+            }
+        } else{
+            throw new RuntimeException("You are not holding the flashlight.");
+        }
+    }
+
     public void updateGameStatus(Flashlight flashlight, Grabbable treasure){
         if (this.activeLocation.isOutside() && this.isHolding(treasure)){
             this.hasWon = true;
@@ -108,7 +121,9 @@ public class Player{
         Location exit1 = new Location("You emerge from the cave onto a quiet beach, with gently rolling waves. You've escaped! To win the game, you need to find the treasure in the cave and bring it outside. There are paths back into the cave to the south and west. In other directions, the beach extends as far as you can see - not much worth exploring there.", "You are outside, on the beach.", true);
         Location southOfExit1 = new Location("You reach a small and empty clearing. There is bright light to the north. Upon examining the ground, you can make out a few footprints leading to the west. To the south is darkness and strange grumbling noises.", "You're on a familiar path, with light to the north, footprints to the west, and darkness to the south.", false);
         Location westOfExit1 = new Location("You navigate a long, rocky path and eventually come to a bend. To the east, you can vaguely make out an opening with bright sunlight shining through. To the south, footprints trail off in the distance.", "You've been in this passage before. There is light to the east, and footprints to the south.", false);
-        Location resourceMonsterRoom = new  Location("You find yourself in a corner of the cave. You can barely make out the shapes of about 20 monsters waiting in the dark. On the ground among them are [SUPPLIES]. The monsters aren't blocking your path to the north or west - you can escape in these directions.", "You're in the corner where you previously found monsters and supplies. There are paths to the north and west.", false, 23);
+        Location resourceMonsterRoom = new  Location("You find yourself in a corner of the cave. You can barely make out the shapes of about 20 monsters waiting in the dark. On the ground among them are a small battery, [SUPPLIES]. The monsters aren't blocking your path to the north or west - you can escape in these directions.", "You're in the corner where you previously found monsters and supplies. There are paths to the north and west.", false, 23);
+        Battery battery = new Battery("battery", 100);
+        resourceMonsterRoom.addToInventory(battery);
         Location southOfResource = new Location("You're in a dark, cramped space. There are paths to the east, west, and north - strange, muffled noises can be heard to the east and west, but the north is silent.", "You've returned to a cramped space, where there are noises to the east and west and a silent path to the north.", false);
         Location exit2 = new Location("The path grows wider as you walk, and you soon find yourself exiting the cave! The outside world looks barren - nothing but flat, sandy ground in every direction. To win the game, you need to find the treasure in the cave and bring it outside. There are paths back inside to the south and east.", "You're outside, on the vast sandy plains.", true);
         Location birdRoom = new Location("You encounter a fork in the passage. You see light to the west and south, and a dark trail to the east. You think you hear birdsong, but it's hard to say where it's coming from.", "You find yourself back in the passage where birds can be heard. There is light to the west and south, and a dark path to the east.", false);
@@ -132,7 +147,7 @@ public class Player{
         map.add(westOfMonsters, 1, 2);
 
         Player player = new Player(startingRoom);
-        Flashlight flashlight = new Flashlight("flashlight");
+        Flashlight flashlight = new Flashlight("flashlight", 50);
         player.addToInventory(flashlight);
         System.out.println("You are in a dark room. It appears to be a cave. To the south and west, there are dark passages - you hear faint noises to the south. Some vague footprints trail off to the east, and there appears to be light in the distance. To the north is a wall. \nYou are holding a flashlight, which is off.");
         System.out.println(player);
@@ -151,23 +166,20 @@ public class Player{
                         flashlight.turnOn();// turning on the flashlight
                         player.arrive(player.getActiveLocation(), flashlight);// reprint the arrival message
                         }
-                    }
-                else if (userInput.equals("turn off flashlight")){
+                } else if (userInput.equals("turn off flashlight")){
                     if (player.isHolding(flashlight)){
                         flashlight.turnOff();
                     }
-                } // add rest of commands
-                else if( userInput.equals("help")){
+                } else if (userInput.equals("change flashlight battery")){
+                    player.changeFlashlightBattery(flashlight, battery);
+                } else if( userInput.equals("help")){
                     player.help();
 
-                }
-                else if(userInput.equals("pick up food")){
+                } else if(userInput.equals("pick up food")){
                     player.pickUp(new Grabbable("food"));
-                }
-                else if(userInput.equals("pick up water")){
+                } else if(userInput.equals("pick up water")){
                     player.pickUp(new Grabbable("water"));
-                }
-                else if(userInput.equals("kill monsters")){
+                } else if(userInput.equals("kill monsters")){
                     if (player.activeLocation== monsterRoom){
                        // monsterRoom.killMonsters(num); we need to discuss about this
                     if (player.isHolding(knife)){
@@ -179,26 +191,21 @@ public class Player{
 
                         }
                     }
-                }
-                else if( userInput.equals("pick up treasure")){
+                } else if( userInput.equals("pick up treasure")){
                     if (player.getActiveLocation().getNumMonsters() == 0){
                         player.pickUp(treasure);
                     } else{
                         throw new RuntimeException("You have to kill the monsters before you can pick up the treasure.");
                     }
-                }
-                else if( userInput.equals("pick up knife")){
+                } else if( userInput.equals("pick up knife")){
                     player.pickUp(knife);
                 }
                 //puting down grabbables commands
                 else if( userInput.equals("put down treasure")){
                     player.putDown(treasure);
-                }
-                else if( userInput.equals("put down knife")){
+                } else if( userInput.equals("put down knife")){
                     player.putDown(knife);
-                }
-            
-                else{
+                } else{
                     throw new RuntimeException("We do not understand what you said. Try Again ");
                 }
                 
