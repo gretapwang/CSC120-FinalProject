@@ -31,7 +31,42 @@ public class Player{
         } else{
             throw new RuntimeException("You're not holding the " + item.getName() + ".");
         }
-    }// Combine this two methods
+    }
+    
+    commands.put("eat", new Command() {
+            @Override
+            public void execute() {
+                changeEnergy(food.getEnergyGain());
+                System.out.println(
+                    "You eat the " + food.getName() +
+                    ". Energy +" + food.getEnergyGain() +
+                    ". Current: " + energy);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Eat food (subclass of Grabbable) to gain energy";
+            }
+        });
+
+        commands.put("drink", new Command() {
+            @Override
+            public void execute() {
+                changeEnergy(water.getEnergyGain());
+                System.out.println(
+                    "You drink the " + water.getName() +
+                    ". Energy +" + water.getEnergyGain() +
+                    ". Current: " + energy);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Drink water (subclass of Grabbable) to gain energy";
+            }
+        });
+
+    
+    // Combine this two methods
 
     public boolean isHolding(Grabbable item){
         if (this.inventory.contains(item)){
