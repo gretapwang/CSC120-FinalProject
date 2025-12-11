@@ -73,6 +73,6 @@ public class Location {
             throw new RuntimeException("There aren't " + numKilled + " monsters here to kill.");
         }
         this.numMonsters -= numKilled;
-        System.out.println("You have killed " + numKilled + " monsters. There are " + this.numMonsters + " remaining.");
+        System.out.println("You have killed " + numKilled + " monsters. \nThere are " + this.numMonsters + " remaining.");
     }
 }
