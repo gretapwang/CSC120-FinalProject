@@ -2,11 +2,16 @@ public class WaterBottle extends Grabbable {
 
     private int energyGain;
     private boolean isOpen;
+    private boolean isFull;
 
     public WaterBottle(String name, int energyGain) {
         super(name);
+        if (energyGain < 0){
+            throw new RuntimeException("Cannot initialize water with negative energy.");
+        }
         this.energyGain = energyGain;
-        this.isOpen = false; //I made water into waterbottle which can be opened/closed
+        this.isOpen = false; //I made water into waterbottle which can be opened/closed and emptied
+        this.isFull = true;
     }
 
     public int getEnergyGain() {
@@ -15,6 +20,14 @@ public class WaterBottle extends Grabbable {
 
     public boolean isOpen(){
         return this.isOpen;
+    }
+
+    public boolean isFull(){
+        return this.isFull;
+    }
+
+    public void emptyOut(){
+        this.isFull = false;
     }
 
     public void open(Player player){

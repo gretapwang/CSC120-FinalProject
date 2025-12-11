@@ -11,10 +11,11 @@ public class Player{
         this.energy = 100;
         this.inventory = new ArrayList<Grabbable>();
         this.activeLocation = activeLocation;
-        activeLocation.visit();
         this.hasLost = false;
         this.hasWon = false;
     }
+
+    // I rearranged some methods a bit just to put them in a more intuitive order, instead of the order we wrote them in
 
     public void addToInventory(Grabbable item){
         if (this.isHolding(item)){
@@ -32,6 +33,37 @@ public class Player{
         }
     }
 
+    public boolean isHolding(Grabbable item){
+        if (this.inventory.contains(item)){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public Location getActiveLocation(){
+        return this.activeLocation;                                                                                                                                                                                              
+    }
+
+    public void spendEnergy(int energyUsed){
+        if (energyUsed < 0){
+            throw new RuntimeException("Cannot spend negative energy.");
+        } else{
+            this.energy -= energyUsed;
+            if (this.energy < 0){
+                this.energy = 0;
+            }
+        }
+    }
+
+    public String toString(){
+        return ("Your energy level is at " + this.energy + ".");
+    }
+
+    public void help(){
+        System.out.println("Here are your available commands: \n go [north/south/east/west] \n turn [on/off] flashlight \n change flashlight battery \n pick up [item] \n put down [item] \n eat [food] \n drink water \n open water bottle \n close water bottle \n kill monsters");
+    }
+
     public void eat(Food food){
         if (this.isHolding(food)){
             this.energy += food.getEnergyGain();
@@ -45,9 +77,13 @@ public class Player{
     public void drink(WaterBottle water){
         if (this.isHolding(water)){
             if (water.isOpen()){
-                this.energy += water.getEnergyGain();
-                this.removeFromInventory(water);
-                System.out.println("You drank the water. Energy +" + water.getEnergyGain());
+                if (water.isFull()){
+                    this.energy += water.getEnergyGain();
+                    water.emptyOut();
+                    System.out.println("You drank the water. Energy +" + water.getEnergyGain());
+                } else{
+                    throw new RuntimeException("You have the " + water.getName() + ", but it's empty.");
+                }
             } else{
                 throw new RuntimeException("The " + water.getName() + " is closed.");
             }
@@ -56,29 +92,9 @@ public class Player{
         }
     }
 
-    public boolean isHolding(Grabbable item){
-        if (this.inventory.contains(item)){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    public Location getActiveLocation(){
-        return this.activeLocation;                                                                                                                                                                                              
-    }
-
-    public String toString(){
-        return ("Your energy level is at " + this.energy + ".");
-    }
-
-    public void help(){
-        System.out.println("Here are your available commands: \n go [east/south/west/north] \n turn [on/off] flashlight \n pick up [supply] \n put down [supply] \n eat [food] \n drink water \n kill monsters");
-    }
-
     public void arrive(Location newLocation, Flashlight flashlight){
         this.activeLocation = newLocation;
-        newLocation.visit();
+        this.spendEnergy(2);
         if (this.isHolding(flashlight) && flashlight.isOn()){
             newLocation.printArrivalMessage();
         } else if (this.isHolding(flashlight)){
@@ -137,14 +153,15 @@ public class Player{
 
 
     public static void main(String[] args){
-        Location startingRoom = new Location("starting room intro message (not used)", "You're back where you started.", false);
+        //initializing locations and grabbable items
+        Location startingRoom = new Location("The space appears to be a cave. To the south and west, there are dark passages - you hear faint noises to the south. Some vague footprints trail off to the east, and there appears to be light in the distance. To the north is a wall.", "You're back where you started.", false);
         Location monsterRoom = new Location("You've entered a foul-smelling part of the cave. Looming in the darkness are the glowing eyes of monsters! It looks like there are roughly 100. In the far corner, you see the gleam of a jewel, but the monsters snarl when you try to get closer. Dark paths lead off to the north and east, and you see a bit of light to the west.", "You're in the spot where you found the monsters and treasure.", false, 117);
         Grabbable treasure = new Grabbable("treasure");
         monsterRoom.addToInventory(treasure);
         Location resourceRoom = new Location("You reach a spot where the dirt underfoot is packed down heavily with footprints - perhaps someone's old hideout, but it seems to be abandoned. Scattered on the ground are a few remnants of human inhabitance: a granola bar, a bottle of water, and a knife. The paths get brighter to the north and east; to the south and west, they are dark.", "You're in the space with the footprints, where you found supplies.", false);
-        Food granolaBar = new Food("granola bar", 40);
+        Food granolaBar = new Food("granola bar", 50);
         resourceRoom.addToInventory(granolaBar);
-        WaterBottle waterBottle = new WaterBottle("water bottle", 20);
+        WaterBottle waterBottle = new WaterBottle("water bottle", 30);
         resourceRoom.addToInventory(waterBottle);
         Grabbable knife = new Grabbable("knife");
         resourceRoom.addToInventory(knife);
@@ -154,7 +171,7 @@ public class Player{
         Location resourceMonsterRoom = new  Location("You find yourself in a corner of the cave. You can barely make out the shapes of about 20 monsters waiting in the dark. On the ground between you and the monsters, you see a small battery and a bag of dried fruit. The monsters aren't blocking your path to the north or west - you can escape in these directions.", "You're in the corner where you previously found monsters and supplies. There are paths to the north and west.", false, 23);
         Battery battery = new Battery("battery", 100);
         resourceMonsterRoom.addToInventory(battery);
-        Food driedFruit = new Food("dried fruit", 30);
+        Food driedFruit = new Food("dried fruit", 40);
         resourceMonsterRoom.addToInventory(driedFruit);
         Location southOfResource = new Location("You're in a dark, cramped space. There are paths to the east, west, and north - strange, muffled noises can be heard to the east and west, but the north is silent.", "You've returned to a cramped space, where there are noises to the east and west and a silent path to the north.", false);
         Location exit2 = new Location("The path grows wider as you walk, and you soon find yourself exiting the cave! The outside world looks barren - nothing but flat, sandy ground in every direction. To win the game, you need to find the treasure in the cave and bring it outside. There are paths back inside to the south and east.", "You're outside, on the vast sandy plains.", true);
@@ -162,8 +179,7 @@ public class Player{
         Location southOfExit2 = new Location("You make your way to a small corner of the cave, where bright sunlight is visible down a path to the north. There is also a dark path to the east.", "You once again find yourself at a sharp turn, with light to the north and darkness to the east.", false);
         Location westOfMonsters = new Location("You're on a long path. There is light to the west, and to the east there is darkness and some unidentifiable noises. You also hear noises down a path to the north - these ones sound like birdsong.", "You're on a familiar path, with sunlight to the west. You hear noises coming from the north and east paths. The north sounds like birds, while the east is muffled and hard to indentify.", false);
 
-        //I think we should make the room setup a bit more complicated - choose some other rooms to have supplies and/or monsters.
-
+        //setting up map of locations
         Map map = new Map(5, 3);
         map.add(startingRoom, 2, 1);
         map.add(monsterRoom, 2, 2);
@@ -178,47 +194,66 @@ public class Player{
         map.add(southOfExit2, 0, 2);
         map.add(westOfMonsters, 1, 2);
 
+        //initializing player & printing initial messages
         Player player = new Player(startingRoom);
         Flashlight flashlight = new Flashlight("flashlight", 50);
         player.addToInventory(flashlight);
-        System.out.println("You are in a dark room. It appears to be a cave. To the south and west, there are dark passages - you hear faint noises to the south. Some vague footprints trail off to the east, and there appears to be light in the distance. To the north is a wall. \nYou are holding a flashlight, which is off.");
+        System.out.println("You're in a very dark, cold space. The air smells musty. You're holding something - upon inspection, you realize it's a flashlight.");
         System.out.println(player);
         System.out.println(flashlight);
         System.out.println("At any time, type 'help' to see your options.");
         Scanner input = new Scanner(System.in);
 
+        //gameplay
         do{
             String userInput = input.nextLine().toLowerCase();
+            System.out.println("\n"); // added this at start and end of loop so the text will appear spaced out & easier to read
             try{
+                //movement commands
                 if (userInput.equals("go east") || userInput.equals("go west") || userInput.equals("go south") || userInput.equals("go north")){
-                    player.arrive(map.getNewLocation(player.activeLocation, userInput), flashlight);
+                    player.arrive(map.getNewLocation(player.getActiveLocation(), userInput), flashlight);
 
+                //help command
+                } else if( userInput.equals("help")){
+                    player.help();
+
+                //killing monsters command
+                } else if(userInput.equals("kill monsters")){
+                    if (player.getActiveLocation().getNumMonsters() == 0){
+                        throw new RuntimeException("There are no monsters here to kill.");
+                    } else{
+                        if (player.isHolding(knife)){
+                            System.out.println("How many do you want to kill? Warning: killing monsters might take a lot of energy!");
+                            int numToKill = input.nextInt();
+                            input.nextLine();
+                            player.getActiveLocation().killMonsters(numToKill);
+                            player.spendEnergy(numToKill/2);
+                        } else{
+                            throw new RuntimeException("You don't have a weapon.");
+                        }
+                    }
+                    
+                //flashlight-specific commands
                 } else if (userInput.equals("turn on flashlight")){
                     flashlight.turnOn(player);//for simplicity, I made it so the turnon method checks that the player is holding it - Greta
-                    player.arrive(player.getActiveLocation(), flashlight);// reprint the arrival message
+                    player.getActiveLocation().printArrivalMessage(); //changed this from using arrive method to printarrival message, to avoid side effect of decreasing energy
                 } else if (userInput.equals("turn off flashlight")){
                     flashlight.turnOff(player);//see comment for turnon
                 } else if (userInput.equals("change flashlight battery")){
                     player.changeFlashlightBattery(flashlight, battery);
-                } else if( userInput.equals("help")){
-                    player.help();
-                } else if(userInput.equals("pick up food")){
-                    player.pickUp(new Grabbable("food"));
-                } else if(userInput.equals("pick up water")){
-                    player.pickUp(new Grabbable("water"));
-                }
-                else if(userInput.equals("kill monsters")){
-                    if (player.activeLocation== monsterRoom){//player.getActiveLocation().getNumberNumMonsters()!==0
-                       // monsterRoom.killMonsters(num); we need to discuss about this
-                    if (player.isHolding(knife)){
-                        System.out.println("ooh how many do you want to kill?");
-                        int a=Integer.parseInt(userInput);
-                        monsterRoom.killMonsters(a);}
-                        else{
-                            throw new RuntimeException("There are no monsters here to kill. Try another command to keep playing");
 
-                        }
-                    }
+                //food/water-specific commands
+                } else if (userInput.equals("eat granola bar")){
+                    player.eat(granolaBar);
+                } else if (userInput.equals("eat dried fruit")){
+                    player.eat(driedFruit);
+                } else if (userInput.equals("open water bottle")){
+                    waterBottle.open(player);
+                } else if (userInput.equals("close water bottle")){
+                    waterBottle.close(player);
+                } else if (userInput.equals("drink water")){
+                    player.drink(waterBottle);
+
                 //pick up commands
                 } else if( userInput.equals("pick up treasure")){
                     // this part used to have an if block to check there are no monsters, but we were going to have to do that for every pickup command, so I added it to the pickup method instead
@@ -235,17 +270,28 @@ public class Player{
                     player.pickUp(driedFruit);
                 } else if(userInput.equals("pick up flashlight")){
                     player.pickUp(flashlight);
-                }
 
-                //puting down grabbables commands
-                else if( userInput.equals("put down treasure")){
+                //put down commands
+                } else if( userInput.equals("put down treasure")){
                     player.putDown(treasure);
                 } else if( userInput.equals("put down knife")){
                     player.putDown(knife);
+                } else if (userInput.equals("put down granola bar")){
+                    player.putDown(granolaBar);
+                } else if (userInput.equals("put down water bottle")){
+                    player.putDown(waterBottle);
+                } else if (userInput.equals("put down battery")){
+                    player.putDown(battery);
+                } else if (userInput.equals("put down dried fruit")){
+                    player.putDown(driedFruit);
+                } else if (userInput.equals("put down flashlight")){
+                    player.putDown(flashlight);
+
                 } else{
                     throw new RuntimeException("We do not understand what you said. Try Again ");
                 }
                 
+                //updating and printing information after each turn
                 if (flashlight.isOn()){
                     flashlight.updateBatteryLevel(-1);
                 }
@@ -255,7 +301,10 @@ public class Player{
             } catch (Exception e){
                 System.out.println(e.getLocalizedMessage());
             }
+            System.out.println("\n");
         } while (!player.hasLost && !player.hasWon);
+
+        //printing ending message
         if (player.hasWon){
             System.out.println("Congratulations, you won! You have escaped with the treasure.");
         } else{

@@ -34,10 +34,6 @@ public class Location {
         return this.isOutside;
     }
 
-    public void visit(){
-        this.hasBeenVisited = true;
-    }
-
     public void printArrivalMessage(){
         if (this.hasBeenVisited){
             System.out.println(this.returnMessage);
@@ -71,9 +67,12 @@ public class Location {
     }
 
     public void killMonsters(int numKilled){
-        if (numKilled > this.numMonsters){
+        if (numKilled < 0){
+            throw new RuntimeException("You can't kill a negative number of monsters;");
+        } else if (numKilled > this.numMonsters){
             throw new RuntimeException("There aren't " + numKilled + " monsters here to kill.");
         }
         this.numMonsters -= numKilled;
+        System.out.println("You have killed " + numKilled + " monsters. There are " + this.numMonsters + " remaining.");
     }
 }
