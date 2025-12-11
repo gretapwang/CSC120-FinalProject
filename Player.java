@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 public class Player{
     private int energy;
@@ -33,43 +31,30 @@ public class Player{
             throw new RuntimeException("You're not holding the " + item.getName() + ".");
         }
     }
-    
-    public void eat() {
-    for (Grabbable item : inventory) {
-        if (item instanceof Grabbable.Food) {
-            Grabbable.Food food = (Grabbable.Food) item;
+
+    public void eat(Food food){
+        if (this.isHolding(food)){
             this.energy += food.getEnergyGain();
-            inventory.remove(item);
-
-            System.out.println("You eat the " + food.getName() +
-                               ". Energy +" + food.getEnergyGain() +
-                               ". Current: " + this.energy + ".");
-            return;
+            this.removeFromInventory(food);
+            System.out.println("You ate the " + food.getName() + ". Energy +" + food.getEnergyGain());
+        } else{
+            throw new RuntimeException("You're not holding the " + food.getName() + ".");
         }
     }
 
-    throw new RuntimeException("You have no food to eat.");
-}
-
-public void drink() {
-    for (Grabbable item : inventory) {
-        if (item instanceof Grabbable.Water) {
-            Grabbable.Water water = (Grabbable.Water) item;
-            this.energy += water.getEnergyGain();
-            inventory.remove(item);
-
-            System.out.println("You drink the " + water.getName() +
-                               ". Energy +" + water.getEnergyGain() +
-                               ". Current: " + this.energy + ".");
-            return;
+    public void drink(WaterBottle water){
+        if (this.isHolding(water)){
+            if (water.isOpen()){
+                this.energy += water.getEnergyGain();
+                this.removeFromInventory(water);
+                System.out.println("You drank the water. Energy +" + water.getEnergyGain());
+            } else{
+                throw new RuntimeException("The " + water.getName() + " is closed.");
+            }
+        } else{
+            throw new RuntimeException("You're not holding the " + water.getName() + ".");
         }
     }
-
-    throw new RuntimeException("You have no water to drink.");
-}
-
-    
-    // Combine this two methods
 
     public boolean isHolding(Grabbable item){
         if (this.inventory.contains(item)){
@@ -107,9 +92,13 @@ public void drink() {
         if (this.isHolding(item)){
             throw new RuntimeException("You're already holding the " + item.getName() + ".");
         } else if (this.activeLocation.hasInInventory(item)){
-            this.addToInventory(item);
-            this.activeLocation.removeFromInventory(item);
-            System.out.println("You have picked up the " + item.getName() + ".");
+            if (this.activeLocation.getNumMonsters() == 0){
+                this.addToInventory(item);
+                this.activeLocation.removeFromInventory(item);
+                System.out.println("You have picked up the " + item.getName() + ".");
+            } else{
+                throw new RuntimeException("The monsters are guarding the " + item.getName() + "! They growl at you when you get close.");
+            }
         } else{
             throw new RuntimeException("The " + item.getName() + " is not at your current location.");
         }
@@ -152,16 +141,21 @@ public void drink() {
         Location monsterRoom = new Location("You've entered a foul-smelling part of the cave. Looming in the darkness are the glowing eyes of monsters! It looks like there are roughly 100. In the far corner, you see the gleam of a jewel, but the monsters snarl when you try to get closer. Dark paths lead off to the north and east, and you see a bit of light to the west.", "You're in the spot where you found the monsters and treasure.", false, 117);
         Grabbable treasure = new Grabbable("treasure");
         monsterRoom.addToInventory(treasure);
-        Location resourceRoom = new Location("You reach a spot where the dirt underfoot is packed down heavily with footprints - perhaps someone's old hideout, but it seems to be abandoned. Scattered on the ground are a few remnants of human inhabitance: a [food], a bottle of water, and a knife. The paths get brighter to the north and east; to the south and west, they are dark.", "You're in the space with the footprints, where you found supplies.", false);
-        //once we have food and water classes, will initialize food and water and add to resourceRoom inventory
+        Location resourceRoom = new Location("You reach a spot where the dirt underfoot is packed down heavily with footprints - perhaps someone's old hideout, but it seems to be abandoned. Scattered on the ground are a few remnants of human inhabitance: a granola bar, a bottle of water, and a knife. The paths get brighter to the north and east; to the south and west, they are dark.", "You're in the space with the footprints, where you found supplies.", false);
+        Food granolaBar = new Food("granola bar", 40);
+        resourceRoom.addToInventory(granolaBar);
+        WaterBottle waterBottle = new WaterBottle("water bottle", 20);
+        resourceRoom.addToInventory(waterBottle);
         Grabbable knife = new Grabbable("knife");
         resourceRoom.addToInventory(knife);
         Location exit1 = new Location("You emerge from the cave onto a quiet beach, with gently rolling waves. You've escaped! To win the game, you need to find the treasure in the cave and bring it outside. There are paths back into the cave to the south and west. In other directions, the beach extends as far as you can see - not much worth exploring there.", "You are outside, on the beach.", true);
         Location southOfExit1 = new Location("You reach a small and empty clearing. There is bright light to the north. Upon examining the ground, you can make out a few footprints leading to the west. To the south is darkness and strange grumbling noises.", "You're on a familiar path, with light to the north, footprints to the west, and darkness to the south.", false);
         Location westOfExit1 = new Location("You navigate a long, rocky path and eventually come to a bend. To the east, you can vaguely make out an opening with bright sunlight shining through. To the south, footprints trail off in the distance.", "You've been in this passage before. There is light to the east, and footprints to the south.", false);
-        Location resourceMonsterRoom = new  Location("You find yourself in a corner of the cave. You can barely make out the shapes of about 20 monsters waiting in the dark. On the ground among them are a small battery, [SUPPLIES]. The monsters aren't blocking your path to the north or west - you can escape in these directions.", "You're in the corner where you previously found monsters and supplies. There are paths to the north and west.", false, 23);
+        Location resourceMonsterRoom = new  Location("You find yourself in a corner of the cave. You can barely make out the shapes of about 20 monsters waiting in the dark. On the ground between you and the monsters, you see a small battery and a bag of dried fruit. The monsters aren't blocking your path to the north or west - you can escape in these directions.", "You're in the corner where you previously found monsters and supplies. There are paths to the north and west.", false, 23);
         Battery battery = new Battery("battery", 100);
         resourceMonsterRoom.addToInventory(battery);
+        Food driedFruit = new Food("dried fruit", 30);
+        resourceMonsterRoom.addToInventory(driedFruit);
         Location southOfResource = new Location("You're in a dark, cramped space. There are paths to the east, west, and north - strange, muffled noises can be heard to the east and west, but the north is silent.", "You've returned to a cramped space, where there are noises to the east and west and a silent path to the north.", false);
         Location exit2 = new Location("The path grows wider as you walk, and you soon find yourself exiting the cave! The outside world looks barren - nothing but flat, sandy ground in every direction. To win the game, you need to find the treasure in the cave and bring it outside. There are paths back inside to the south and east.", "You're outside, on the vast sandy plains.", true);
         Location birdRoom = new Location("You encounter a fork in the passage. You see light to the west and south, and a dark trail to the east. You think you hear birdsong, but it's hard to say where it's coming from.", "You find yourself back in the passage where birds can be heard. There is light to the west and south, and a dark path to the east.", false);
@@ -200,19 +194,14 @@ public void drink() {
                     player.arrive(map.getNewLocation(player.activeLocation, userInput), flashlight);
 
                 } else if (userInput.equals("turn on flashlight")){
-                    if(player.isHolding(flashlight)){
-                        flashlight.turnOn();// turning on the flashlight
-                        player.arrive(player.getActiveLocation(), flashlight);// reprint the arrival message
-                        }
+                    flashlight.turnOn(player);//for simplicity, I made it so the turnon method checks that the player is holding it - Greta
+                    player.arrive(player.getActiveLocation(), flashlight);// reprint the arrival message
                 } else if (userInput.equals("turn off flashlight")){
-                    if (player.isHolding(flashlight)){
-                        flashlight.turnOff();
-                    }
+                    flashlight.turnOff(player);//see comment for turnon
                 } else if (userInput.equals("change flashlight battery")){
                     player.changeFlashlightBattery(flashlight, battery);
                 } else if( userInput.equals("help")){
                     player.help();
-
                 } else if(userInput.equals("pick up food")){
                     player.pickUp(new Grabbable("food"));
                 } else if(userInput.equals("pick up water")){
@@ -230,15 +219,24 @@ public void drink() {
 
                         }
                     }
+                //pick up commands
                 } else if( userInput.equals("pick up treasure")){
-                    if (player.getActiveLocation().getNumMonsters() == 0){
-                        player.pickUp(treasure);
-                    } else{
-                        throw new RuntimeException("You have to kill the monsters before you can pick up the treasure.");
-                    }
+                    // this part used to have an if block to check there are no monsters, but we were going to have to do that for every pickup command, so I added it to the pickup method instead
+                    player.pickUp(treasure);
                 } else if( userInput.equals("pick up knife")){
                     player.pickUp(knife);
+                } else if(userInput.equals("pick up granola bar")){
+                    player.pickUp(granolaBar);
+                } else if(userInput.equals("pick up water bottle")){
+                    player.pickUp(waterBottle);
+                } else if(userInput.equals("pick up battery")){
+                    player.pickUp(battery);
+                } else if(userInput.equals("pick up dried fruit")){
+                    player.pickUp(driedFruit);
+                } else if(userInput.equals("pick up flashlight")){
+                    player.pickUp(flashlight);
                 }
+
                 //puting down grabbables commands
                 else if( userInput.equals("put down treasure")){
                     player.putDown(treasure);

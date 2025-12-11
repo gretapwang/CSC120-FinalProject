@@ -29,21 +29,29 @@ public class Flashlight extends Grabbable {
         return this.isOn;
     }
 
-    public void turnOn(){
-        if (this.isOn){
-            throw new RuntimeException("The flashlight is already on.");
+    public void turnOn(Player player){
+        if (player.isHolding(this)){
+            if (this.isOn){
+                throw new RuntimeException("The flashlight is already on.");
+            } else{
+                this.isOn = true;
+                System.out.println("The flashlight is now on.");
+            }
         } else{
-            this.isOn = true;
-            System.out.println("The flashlight is now on.");
+            throw new RuntimeException("You're not holding the flashlight.");
         }
     }
 
-    public void turnOff(){
-        if (this.isOn){
-            this.isOn = false;
-            System.out.println("The flashlight is now off.");
+    public void turnOff(Player player){
+        if (player.isHolding(this)){
+            if (this.isOn){
+                this.isOn = false;
+                System.out.println("The flashlight is now off.");
+            } else{
+                throw new RuntimeException("The flashlight is already off.");
+            }
         } else{
-            throw new RuntimeException("The flashlight is already off.");
+            throw new RuntimeException("You're not holding the flashlight.");
         }
     }
 
