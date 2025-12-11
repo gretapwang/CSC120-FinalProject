@@ -34,37 +34,39 @@ public class Player{
         }
     }
     
-    commands.put("eat", new Command() {
-            @Override
-            public void execute() {
-                changeEnergy(food.getEnergyGain());
-                System.out.println(
-                    "You eat the " + food.getName() +
-                    ". Energy +" + food.getEnergyGain() +
-                    ". Current: " + energy);
-            }
+    public void eat() {
+    for (Grabbable item : inventory) {
+        if (item instanceof Grabbable.Food) {
+            Grabbable.Food food = (Grabbable.Food) item;
+            this.energy += food.getEnergyGain();
+            inventory.remove(item);
 
-            @Override
-            public String getDescription() {
-                return "Eat food (subclass of Grabbable) to gain energy";
-            }
-        });
+            System.out.println("You eat the " + food.getName() +
+                               ". Energy +" + food.getEnergyGain() +
+                               ". Current: " + this.energy + ".");
+            return;
+        }
+    }
 
-        commands.put("drink", new Command() {
-            @Override
-            public void execute() {
-                changeEnergy(water.getEnergyGain());
-                System.out.println(
-                    "You drink the " + water.getName() +
-                    ". Energy +" + water.getEnergyGain() +
-                    ". Current: " + energy);
-            }
+    throw new RuntimeException("You have no food to eat.");
+}
 
-            @Override
-            public String getDescription() {
-                return "Drink water (subclass of Grabbable) to gain energy";
-            }
-        });
+public void drink() {
+    for (Grabbable item : inventory) {
+        if (item instanceof Grabbable.Water) {
+            Grabbable.Water water = (Grabbable.Water) item;
+            this.energy += water.getEnergyGain();
+            inventory.remove(item);
+
+            System.out.println("You drink the " + water.getName() +
+                               ". Energy +" + water.getEnergyGain() +
+                               ". Current: " + this.energy + ".");
+            return;
+        }
+    }
+
+    throw new RuntimeException("You have no water to drink.");
+}
 
     
     // Combine this two methods
