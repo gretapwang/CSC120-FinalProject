@@ -44,6 +44,9 @@ public class Map {
 
     /**
      * Adds the given Location to the Map at the specified position, unless it is already on the Map
+     * @param location Location to add to Map
+     * @param column Column number to add Location at
+     * @param row Row number to add Location at
      */
     public void add(Location location, int column, int row){
         if (this.hasLocation(location)){
@@ -55,6 +58,11 @@ public class Map {
         }
     }
 
+    /**
+     * Returns the row number where the given Location is located on the Map
+     * @param location Location to get row for
+     * @return Row number of the Location
+     */
     public int getRow(Location location){
         if (this.hasLocation(location)){
             int row = 0;
@@ -69,11 +77,22 @@ public class Map {
         }
     }
 
+    /**
+     * Returns the column number where the given Location is located on the Map
+     * @param location Location to get column for
+     * @return Column number of the Location
+     */
     public int getColumn(Location location){
         int row = this.getRow(location);
         return this.map.get(row).indexOf(location);
     }
 
+    /**
+     * Given a Location on the Map and a direction, returns the adjacent Location in that direction, or throws a RuntimeException if there is none
+     * @param oldLocation Location to move from
+     * @param userInput String indicating direction to move in
+     * @return Adjacent Location in the specified direction
+     */
     public Location getNewLocation(Location oldLocation, String userInput){
         int row = this.getRow(oldLocation);
         int column = this.getColumn(oldLocation);
