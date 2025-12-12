@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 /**
  * Stores information about the player and game progression. main gameplay method is located here
- * @author Greta Wang, Diane Tuyizere, Alexa Huayta-Alata
+ * @author Greta Wang, Diane Tuyizere, Alexa Huayta
  * @version 12/11/2025
  */
 public class Player{
