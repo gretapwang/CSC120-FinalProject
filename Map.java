@@ -1,10 +1,20 @@
 import java.util.ArrayList;
+/**
+ * Stores the game's layout in a 2D ArrayList of Locations
+ * @author Greta Wang, Diane Tuyizere, Alexa Huayta
+ * @version 12/11/2025
+ */
 public class Map {
     private int nColumns;
     private int nRows;
     private ArrayList<ArrayList<Location>> map;
     private Location emptySpace = new Location("a", "b", false);
 
+    /**
+     * Constructor 
+     * @param nColumns Number of columns on the map
+     * @param nRows Number of rows on the map
+     */
     public Map(int nColumns, int nRows){
         this.nColumns = nColumns;
         this.nRows = nRows;
@@ -17,6 +27,11 @@ public class Map {
         }
     }
 
+    /**
+     * Returns true if the given Location is on the Map, false otherwise
+     * @param location Location to check status of
+     * @return True if location is on map, false otherwise
+     */
     public boolean hasLocation(Location location){
         int numOccurrences = 0;
         for (int i = 0; i < this.nRows; i++){
@@ -27,6 +42,9 @@ public class Map {
         return (numOccurrences > 0);
     }
 
+    /**
+     * Adds the given Location to the Map at the specified position, unless it is already on the Map
+     */
     public void add(Location location, int column, int row){
         if (this.hasLocation(location)){
             throw new RuntimeException("Location already on map.");

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 /**
  * Contains information about a location in the game
- * @author Greta Wang, Diane Tuyizere, Alexa Huayta-Alata
+ * @author Greta Wang, Diane Tuyizere, Alexa Huayta
  * @version 12/11/2025
  */
 public class Location {
