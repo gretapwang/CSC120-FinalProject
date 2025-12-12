@@ -15,7 +15,7 @@ public class Grabbable {
     }
 /**
  * the getter method to help accessing the name
- * @param name
+ * @return the item's name
  */
     public String getName() {
         return this.name;
