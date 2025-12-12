@@ -1,21 +1,41 @@
+/**
+ * Contains the flashlight workability in the game
+ * @author Greta Wang, Diane Tuyizere, Alexa Huayta
+ * @version 12/11/2025
+ */
 public class Flashlight extends Grabbable {
     private int batteryLevel;
     private boolean isOn;
 
+/**
+ * Class constructor 
+ * @param name default name for the flashlight
+ * @param battteryLevel the level of the battery
+ */
     public Flashlight(String name, int batteryLevel){
         super(name);
         this.batteryLevel = batteryLevel;
         this.isOn = false;
     }
-    
+/**
+ * getter method to access the batteryLevel
+ * @param batteryLevel the level that the battery is on
+ * @return the batteryLevel 
+ */    
     public int getBatteryLevel(){
         return this.batteryLevel;
     }
-
+/**
+ * setter method that allows the modification on the flashlight battery level
+ * @param newbattteryLevel new battery level
+ */
     public void setBatteryLevel(int newBatteryLevel){
         this.batteryLevel = newBatteryLevel;
     }
-
+/**
+ * Method to update the battery level while limiting them in the range of 0 to 100
+ * @param changeInBattery new battery
+ */
     public void updateBatteryLevel(int changeInBattery){
         this.batteryLevel += changeInBattery;
         if (this.batteryLevel > 100){
@@ -24,11 +44,17 @@ public class Flashlight extends Grabbable {
             this.batteryLevel = 0;
         }
     }
-
+/**
+ * Boolean to check if the flashlight is on
+ * @return true if flashlight is on and false if otherwise
+ */
     public boolean isOn(){
         return this.isOn;
     }
-
+/**
+ * helpd in turning on the flashlight under some conditions
+ * @param player the player to turn on the flashlight
+ */
     public void turnOn(Player player){
         if (player.isHolding(this)){
             if (this.isOn){
@@ -41,7 +67,10 @@ public class Flashlight extends Grabbable {
             throw new RuntimeException("You're not holding the flashlight.");
         }
     }
-
+/**
+ * Turning off the flashlight
+ * @param player the user of the flashlight
+ */
     public void turnOff(Player player){
         if (player.isHolding(this)){
             if (this.isOn){
@@ -54,7 +83,9 @@ public class Flashlight extends Grabbable {
             throw new RuntimeException("You're not holding the flashlight.");
         }
     }
-
+/**
+ * Go string to print the Battery status
+ */
     public String toString(){
         return("Your flashlight battery is at " + this.batteryLevel + ".");
     }
