@@ -1,6 +1,16 @@
+/**
+ * Battery object contains an amount of power, which player can use to replenish their flashlight
+ * @author Greta Wang, Diane Tuyizere, Alexa Huayta
+ * @version 12/11/2025
+ */
 public class Battery extends Grabbable {
     private int power;
 
+    /**
+     * Constructor
+     * @param name Name of the Battery
+     * @param power Amount of energy stored
+     */
     public Battery(String name, int power){
         super(name);
         if (power < 0){
@@ -9,6 +19,10 @@ public class Battery extends Grabbable {
         this.power = power;
     }
 
+    /**
+     * Getter for power
+     * @return Amount of power in the Battery
+     */
     public int getPower(){
         return this.power;
     }
