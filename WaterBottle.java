@@ -25,12 +25,12 @@ public class WaterBottle extends Grabbable {
             throw new RuntimeException("Cannot initialize water with negative energy.");
         }
         this.energyGain = energyGain;
-        this.isOpen = false; //I made water into waterbottle which can be opened/closed and emptied
+        this.isOpen = false; 
         this.isFull = true;
     }
     /** 
     * getEnergyGain method returns the energy gain value of the water bottle when called.
-    * @return the amount of energy the water bottle gives to the player/
+    * @return the amount of energy the water bottle gives to the player
     */
     public int getEnergyGain() {
         return this.energyGain;
@@ -53,18 +53,17 @@ public class WaterBottle extends Grabbable {
     }
 
     /** 
-    * isEmptyOut method makes the water bottle empty when called.
-    * @return the boolean value of isFull attribute as false.
+    * emptyOut method makes the water bottle empty when called.
     */
-    public void emptyOut(){
+    public void emptyOut(){   // removed an extraneous @return from javadoc header for this method
         this.isFull = false;
     }
 
     /** 
-    * @param player the player object that is trying to open the water bottle.
     * open method opens the water bottle when called if the player is holding the water bottle.
+    * @param player the player object that is trying to open the water bottle.
     */
-    public void open(Player player){
+    public void open(Player player){  // description and @param were listed in wrong order in header, i just switched them. same for close() - greta
         if (player.isHolding(this)){
             if (this.isOpen){
                 throw new RuntimeException("The water bottle is already open.");
@@ -78,8 +77,8 @@ public class WaterBottle extends Grabbable {
     }
 
     /** 
-    * @param player the player object that is trying to close the water bottle.
     * close method closes the water bottle when called if the player is holding the water bottle.
+    * @param player the player object that is trying to close the water bottle.
     */
     public void close(Player player){
         if (player.isHolding(this)){

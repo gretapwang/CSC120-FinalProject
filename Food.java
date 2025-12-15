@@ -20,10 +20,12 @@ public class Food extends Grabbable {
         this.energyGain = energyGain;
     }
 
-/** 
-* getEnergyGain method returns the energy gain value of the food item when called.
-* @return the amount of energy the food gives to the player. 
-*/
+    // fixed spacing
+
+    /** 
+    * getEnergyGain method returns the energy gain value of the food item when called.
+    * @return the amount of energy the food gives to the player. 
+    */
     public int getEnergyGain() {
         return this.energyGain;
     }
