@@ -110,7 +110,7 @@ public class Player{
      * Prints a list of valid user commands
      */
     public void help(){
-        System.out.println("Here are your available commands: \n - go [north/south/east/west] \n - turn [on/off] flashlight \n - change flashlight battery \n - view inventory \n - pick up [item] \n - put down [item] \n - eat [food] \n - drink water \n - open water bottle \n - close water bottle \n - kill monsters");
+        System.out.println("Here are your available commands: \n - go [north/south/east/west] \n - turn [on/off] flashlight \n - change flashlight battery \n - view inventory \n - pick up [item] \n - put down [item] \n - eat [food] \n - drink water \n - open water bottle \n - close water bottle \n - kill monsters \n \nThe valid item names are as follows: \n - flashlight \n - granola bar \n - dried fruit \n - water bottle \n - knife \n - battery \n - treasure \n");
     }
 
     /**
