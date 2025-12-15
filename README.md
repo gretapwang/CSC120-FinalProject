@@ -28,7 +28,7 @@ With unlimited time, we would make a much larger cave with more rooms and items 
 
  - What was the most helpful **piece of feedback** you received while working on your project? Who gave it to you?
 
-need to discuss this one!
+Our classmate Grace gave us some very helpful feedback about the formatting of the printed messages in our game. She noticed that the text was difficult to read and suggested we space it out more, instead of printing big paragraphs. We implemented this feedback and found that it made the game much more user friendly. Until this point, we hadn't thought much about formatting, so Grace's advice led us to consider the player's experience of the game and make other changes, such as printing some bulleted lists.
 
  - If you could go back in time and give your past self some **advice** about this project, what hints would you give?
 
