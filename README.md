@@ -9,9 +9,6 @@
  - Completed `rubric.md`
 
 
- Design justification (where to put??)
- Our final design includes a main Player class, Location and Map to manage the layout, and Grabbable with subclasses Flashlight, Food, WaterBottle, and Battery. This design captures the essential features we need from each type of object in the game, while being fairly steamlined. Our initial plan was to have several classes encompassing what became the Location class. We reasoned that the locations would have different features - some are outside, some have monsters - and that in order to make the player's options in each location vary accordingly, we needed separate classes. However, we later realized that by having attributes to record the features of each location, including the number of monsters and whether it is outside, we could determine the player's options more efficiently with a single Location class. Similarly, our first idea for Grabbable was to make it an abstract class and have subclasses for every type of item, including weapon and treasure. We reconsidered this plan when we started making the subclasses and found that these two didn't need any additional attributes or methods. Neither did we need to have any methods that specifically took in weapons or treasure as parameters. Thus, we decided to forgo those two subclasses and simply have the weapon and treasure be instances of Grabbable. 
-  
 ## Additional Reflection Questions
  - What was your **overall approach** to tackling this project?
 
