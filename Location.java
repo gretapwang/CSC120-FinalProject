@@ -50,14 +50,6 @@ public class Location {
     }
 
     /**
-     * Setter for numMonsters
-     * @param num Number of monsters to set at the Location
-     */
-    public void setNumMonsters(int num){
-        this.numMonsters = num;
-    }
-
-    /**
      * Getter for isOutside
      * @return True if the Location is outside the cave, false otherwise
      */

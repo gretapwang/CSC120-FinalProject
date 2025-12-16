@@ -14,6 +14,9 @@ public class Flashlight extends Grabbable {
      */
     public Flashlight(String name, int batteryLevel){
         super(name);
+        if (batteryLevel < 0){
+            throw new RuntimeException("Cannot set negative battery level.");
+        }
         this.batteryLevel = batteryLevel;
         this.isOn = false;
     }
@@ -31,6 +34,9 @@ public class Flashlight extends Grabbable {
      * @param newBatteryLevel new battery level
      */
     public void setBatteryLevel(int newBatteryLevel){
+        if (newBatteryLevel < 0){
+            throw new RuntimeException("Cannot set negative battery level.");
+        }
         this.batteryLevel = newBatteryLevel;
     }
 
