@@ -36,4 +36,4 @@ We would advise our past selves to be thoughtful about how many classes we truly
 
  - _If you worked with a team:_ please comment on how your **team dynamics** influenced your experience working on this project.
 
-???
+Working in a team helped us stay organized while completing the project. We would meet to discuss our progress and assign specific tasks to each person, so that once we were starting our independent work, we already had a clear plan. Teamwork also streamlined the experience of this project by allowing us each to focus on specific aspects of the game, rather than juggling all of them. 
