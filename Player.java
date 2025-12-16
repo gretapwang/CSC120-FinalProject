@@ -391,7 +391,7 @@ public class Player{
 
         //printing ending message
         if (player.hasWon){
-            System.out.println("YAY!!!!Congratulations, you won!!!! \nYou have escaped with the treasure :)");
+            System.out.println("YAY!!!! Congratulations, you won!!!! \nYou have escaped with the treasure :)");
         } else{
             System.out.println("You lost :( \nYou ran out of resources before you could escape with the treasure.");
         }
