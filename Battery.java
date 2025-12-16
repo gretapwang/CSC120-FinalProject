@@ -1,7 +1,7 @@
 /**
  * Battery object contains an amount of power, which player can use to replenish their flashlight.
  * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
- * @version 12/11/2025.
+ * @version 12/15/2025.
  */
 public class Battery extends Grabbable {
     private int power;

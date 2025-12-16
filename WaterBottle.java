@@ -1,7 +1,7 @@
 /** 
 * The class WaterBottle extends the Grabbable class to create water bottle object that gives the player energy when water is drunk.
 * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
-* @version 12/11/2025.
+* @version 12/15/2025.
  */
 
 public class WaterBottle extends Grabbable {

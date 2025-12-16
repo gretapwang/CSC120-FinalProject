@@ -2,7 +2,7 @@ import java.util.ArrayList;
 /**
  * Stores the game's layout in a 2D ArrayList of Locations.
  * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
- * @version 12/11/2025.
+ * @version 12/15/2025.
  */
 public class Map {
     private int nColumns;

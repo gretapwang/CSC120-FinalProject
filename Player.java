@@ -3,7 +3,7 @@ import java.util.Scanner;
 /**
  * Stores information about the player and game progression. main gameplay method is located here.
  * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
- * @version 12/11/2025.
+ * @version 12/15/2025.
  */
 public class Player{
     private int energy;
