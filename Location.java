@@ -65,7 +65,7 @@ public class Location {
         if (this.hasBeenVisited){
             System.out.println(this.returnMessage);
             if (this.numMonsters > 0){
-                System.out.println("There are " + this.numMonsters + " remaining here.");
+                System.out.println("There are " + this.numMonsters + " monsters remaining here.");
             }
         } else{
             System.out.println(this.initialMessage);
