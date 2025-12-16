@@ -39,3 +39,6 @@ If your game includes challenges that must be overcome to win, also list them be
 
 # Game Layout
 For the game layout we chose the diagram which is "Game Layout.jpg"
+
+# Design Justification
+The design justifivcation is the file named "designJustifiacation.md"
