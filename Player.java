@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 /**
- * Stores information about the player and game progression. main gameplay method is located here
- * @author Greta Wang, Diane Tuyizere, Alexa Huayta
- * @version 12/11/2025
+ * Stores information about the player and game progression. Main gameplay method is located here.
+ * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
+ * @version 12/11/2025.
  */
 public class Player{
     private int energy;
@@ -13,8 +13,8 @@ public class Player{
     private boolean hasWon;
 
     /**
-     * Constructor
-     * @param activeLocation Location where the Player starts out
+     * Constructo.
+     * @param activeLocation Location where the Player starts out.
      */
     public Player(Location activeLocation){
         this.energy = 100;
@@ -25,8 +25,8 @@ public class Player{
     }
 
     /**
-     * Adds the given Grabbable to the Player's inventory
-     * @param item Grabbable to be added to inventory
+     * Adds the given Grabbable to the Player's inventory.
+     * @param item Grabbable to be added to inventory.
      */
     public void addToInventory(Grabbable item){
         if (this.isHolding(item)){
@@ -37,8 +37,8 @@ public class Player{
     }
 
     /**
-     * Removes the given Grabbable from the Player's inventory
-     * @param item Grabbable to be removed from inventory
+     * Removes the given Grabbable from the Player's inventory.
+     * @param item Grabbable to be removed from inventory.
      */
     public void removeFromInventory(Grabbable item){
         if (this.isHolding(item)){
@@ -63,9 +63,9 @@ public class Player{
     }
 
     /**
-     * Returns true if the given Grabbable is in the Player's inventory, false otherwise
-     * @param item Grabbable to check
-     * @return true if item is in inventory, false otherwise
+     * Returns true if the given Grabbable is in the Player's inventory, false otherwise.
+     * @param item Grabbable to check.
+     * @return true if item is in inventory, false otherwise.
      */
     public boolean isHolding(Grabbable item){
         if (this.inventory.contains(item)){
@@ -76,16 +76,16 @@ public class Player{
     }
 
     /**
-     * Getter for activeLocation
-     * @return Player's current location
+     * Getter for activeLocation.
+     * @return Player's current location.
      */
     public Location getActiveLocation(){
         return this.activeLocation;                                                                                                                                                                                              
     }
 
     /**
-     * Decreases Player's energy level by the given amount
-     * @param energyUsed Amount to decrease energy level by
+     * Decreases Player's energy level by the given amount.
+     * @param energyUsed Amount to decrease energy level by.
      */
     public void spendEnergy(int energyUsed){
         if (energyUsed < 0){
@@ -99,23 +99,23 @@ public class Player{
     }
 
     /**
-     * Returns a String that states the Player's energy level
-     * @return String stating energy level
+     * Returns a String that states the Player's energy level.
+     * @return String stating energy level.
      */
     public String toString(){
         return ("Your energy level is at " + this.energy + ".");
     }
 
     /**
-     * Prints a list of valid user commands
+     * Prints a list of valid user commands.
      */
     public void help(){
         System.out.println("Here are your available commands: \n - go [north/south/east/west] \n - turn [on/off] flashlight \n - change flashlight battery \n - view inventory \n - pick up [item] \n - put down [item] \n - eat [food] \n - drink water \n - open water bottle \n - close water bottle \n - kill monsters");
     }
 
     /**
-     * Given a Food object that the Player is holding, increases Player's energy accordingly and removes the Food from inventory
-     * @param food Food to be eaten
+     * Given a Food object that the Player is holding, increases Player's energy accordingly and removes the Food from inventory.
+     * @param food Food to be eaten.
      */
     public void eat(Food food){
         if (this.isHolding(food)){
@@ -128,8 +128,8 @@ public class Player{
     }
 
     /**
-     * Given an open WaterBottle that the Player is holding, increases Player's energy accordingly and empties WaterBottle
-     * @param water WaterBottle to drink out of
+     * Given an open WaterBottle that the Player is holding, increases Player's energy accordingly and empties WaterBottle.
+     * @param water WaterBottle to drink out of.
      */
     public void drink(WaterBottle water){
         if (this.isHolding(water)){
@@ -150,9 +150,9 @@ public class Player{
     }
 
     /**
-     * Moves Player to the given Location, prints an appropriate message, and decreases Player's energy
-     * @param newLocation Location to arrive at
-     * @param flashlight Flashlight object, for purpose of determining if Player has enough light to see
+     * Moves Player to the given Location, prints an appropriate message, and decreases Player's energy.
+     * @param newLocation Location to arrive at.
+     * @param flashlight Flashlight object, for purpose of determining if Player has enough light to see.
      */
     public void arrive(Location newLocation, Flashlight flashlight){
         this.activeLocation = newLocation;
@@ -165,8 +165,8 @@ public class Player{
     }
 
     /**
-     * If applicable, moves the given Grabbable from the inventory of the Player's Location to that of the Player
-     * @param item Grabbable to pick up
+     * If applicable, moves the given Grabbable from the inventory of the Player's Location to that of the Player.
+     * @param item Grabbable to pick up.
      */
     public void pickUp(Grabbable item){
         if (this.isHolding(item)){
@@ -185,8 +185,8 @@ public class Player{
     }
 
     /**
-     * If applicable, moves the given Grabbable from the Player's inventory to that of their Location
-     * @param item Grabbable to put down
+     * If applicable, moves the given Grabbable from the Player's inventory to that of their Location.
+     * @param item Grabbable to put down.
      */
     public void putDown(Grabbable item){
         if (this.isHolding(item)){
@@ -199,9 +199,9 @@ public class Player{
     }
 
     /**
-     * If Player is holding the given items, sets battery level of the Flashlight to the power level of the Battery, and removes Battery from Player's inventory
-     * @param flashlight Flashlight to update battery level of
-     * @param battery Battery for determining new Flashlight battery level
+     * If Player is holding the given items, sets battery level of the Flashlight to the power level of the Battery, and removes Battery from Player's inventory.
+     * @param flashlight Flashlight to update battery level of.
+     * @param battery Battery for determining new Flashlight battery level.
      */
     public void changeFlashlightBattery(Flashlight flashlight, Battery battery){
         if (this.isHolding(flashlight)){
@@ -218,9 +218,9 @@ public class Player{
     }
 
     /**
-     * Checks if Player has won/lost, and updates boolean attributes accordingly
-     * @param flashlight Flashlight, to check battery level
-     * @param treasure The treasure, to check if Player has it
+     * Checks if Player has won/lost, and updates boolean attributes accordingly.
+     * @param flashlight Flashlight, to check battery level.
+     * @param treasure The treasure, to check if Player has it.
      */
     public void updateGameStatus(Flashlight flashlight, Grabbable treasure){
         if (this.activeLocation.isOutside() && this.isHolding(treasure)){
@@ -232,11 +232,11 @@ public class Player{
 
 
     /**
-     * Initializes all objects and carries out gameplay
-     * @param args Command line arguments (ignored)
+     * Initializes all objects and carries out gameplay.
+     * @param args Command line arguments (ignored).
      */
     public static void main(String[] args){
-        //initializing locations and grabbable items
+        //initializing locations and grabbable items.
         Location startingRoom = new Location("The space appears to be a cave. \nTo the south and west, there are dark passages - you hear faint noises to the south. \nSome vague footprints trail off to the east, and there appears to be light in the distance. \nTo the north is a wall.", "You're back where you started.", false);
         Location monsterRoom = new Location("You've entered a foul-smelling part of the cave. \nLooming in the darkness are the glowing eyes of monsters! \nIt looks like there are roughly 100. \nIn the far corner, you see the gleam of treasure, but the monsters snarl when you try to get closer. \nDark paths lead off to the north and east, and you see a bit of light to the west.", "You're in the spot where you found the monsters and treasure.", false, 117);
         Grabbable treasure = new Grabbable("treasure");
@@ -262,7 +262,7 @@ public class Player{
         Location southOfExit2 = new Location("You make your way to a small corner of the cave, where bright sunlight is visible down a path to the north. \nThere is also a dark path to the east.", "You once again find yourself at a sharp turn, with light to the north and darkness to the east.", false);
         Location westOfMonsters = new Location("You're on a long path. \nThere is light to the west, and to the east there is darkness and some unidentifiable noises. \nYou also hear noises down a path to the north - these ones sound like birdsong.", "You're on a familiar path. \nThere is light to the west, and strange noises to the east. \nThe path also branches off to the north; you hear faint birdsong coming from this direction.", false);
 
-        //setting up map of locations
+        //setting up map of locations.
         Map map = new Map(5, 3);
         map.add(startingRoom, 2, 1);
         map.add(monsterRoom, 2, 2);
@@ -277,7 +277,7 @@ public class Player{
         map.add(southOfExit2, 0, 2);
         map.add(westOfMonsters, 1, 2);
 
-        //initializing player & printing initial messages
+        //initializing player & printing initial messages.
         Player player = new Player(startingRoom);
         Flashlight flashlight = new Flashlight("flashlight", 50);
         player.addToInventory(flashlight);
@@ -286,23 +286,23 @@ public class Player{
         System.out.println("At any time, type 'help' to see your options.\n");
         Scanner input = new Scanner(System.in);
 
-        //gameplay
+        //gameplay.
         do{
             System.out.print(">> ");
             String userInput = input.nextLine().toLowerCase().strip();
             System.out.print("\n");
             try{
-                //movement commands
+                //movement commands.
                 if (userInput.equals("go east") || userInput.equals("go west") || userInput.equals("go south") || userInput.equals("go north")){
                     player.arrive(map.getNewLocation(player.getActiveLocation(), userInput), flashlight);
 
-                //help commands
+                //help commands.
                 } else if (userInput.equals("help")){
                     player.help();
                 } else if (userInput.equals("view inventory")){
                     player.printInventory();
 
-                //killing monsters command
+                //killing monsters command.
                 } else if (userInput.equals("kill monsters")){
                     if (player.getActiveLocation().getNumMonsters() == 0){
                         throw new RuntimeException("There are no monsters here to kill.");
@@ -320,7 +320,7 @@ public class Player{
                         }
                     }
                     
-                //flashlight-specific commands
+                //flashlight-specific commands.
                 } else if (userInput.equals("turn on flashlight")){
                     flashlight.turnOn(player);
                     player.getActiveLocation().printArrivalMessage();
@@ -329,7 +329,7 @@ public class Player{
                 } else if (userInput.equals("change flashlight battery")){
                     player.changeFlashlightBattery(flashlight, battery);
 
-                //food/water-specific commands
+                //food/water-specific commands.
                 } else if (userInput.equals("eat granola bar")){
                     player.eat(granolaBar);
                 } else if (userInput.equals("eat dried fruit")){
@@ -341,7 +341,7 @@ public class Player{
                 } else if (userInput.equals("drink water")){
                     player.drink(waterBottle);
 
-                //pick up commands
+                //pick up commands.
                 } else if (userInput.equals("pick up treasure")){
                     player.pickUp(treasure);
                 } else if (userInput.equals("pick up knife")){
@@ -357,7 +357,7 @@ public class Player{
                 } else if (userInput.equals("pick up flashlight")){
                     player.pickUp(flashlight);
 
-                //put down commands
+                //put down commands.
                 } else if (userInput.equals("put down treasure")){
                     player.putDown(treasure);
                 } else if (userInput.equals("put down knife")){
@@ -377,7 +377,7 @@ public class Player{
                     throw new RuntimeException("We don't understand what you said. Type 'help' to see valid commands.");
                 }
                 
-                //updating and printing information after each turn
+                //updating and printing information after each turn.
                 if (flashlight.isOn()){
                     flashlight.updateBatteryLevel(-1);
                 }
@@ -389,7 +389,7 @@ public class Player{
             System.out.print("\n");
         } while (!player.hasLost && !player.hasWon);
 
-        //printing ending message
+        //printing ending message.
         if (player.hasWon){
             System.out.println("Congratulations, you won! \nYou have escaped with the treasure.");
         } else{

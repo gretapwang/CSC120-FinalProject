@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 /**
- * Contains information about a location in the game
- * @author Greta Wang, Diane Tuyizere, Alexa Huayta
- * @version 12/11/2025
+ * Contains information about a location in the game.
+ * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
+ * @version 12/11/2025.
  */
 public class Location {
     private String initialMessage;
@@ -13,11 +13,11 @@ public class Location {
     private boolean isOutside;
 
     /**
-     * Full constructor
-     * @param initialMessage Message to print the first time Player arrives
-     * @param returnMessage Message to print at subsequent arrivals
-     * @param isOutside True if the Location is outside the cave, false otherwise
-     * @param numMonsters Number of monsters at this Location
+     * Full constructor.
+     * @param initialMessage Message to print the first time Player arrives.
+     * @param returnMessage Message to print at subsequent arrivals.
+     * @param isOutside True if the Location is outside the cave, false otherwise.
+     * @param numMonsters Number of monsters at this Location..
      */
     public Location(String initialMessage, String returnMessage, boolean isOutside, int numMonsters){
         if (numMonsters < 0){
@@ -32,34 +32,34 @@ public class Location {
     }
 
     /**
-     * Overloaded constructor without numMonsters. automatically sets Location to have 0 monsters
-     * @param initialMessage Message to print the first time Player arrives
-     * @param returnMessage Message to print at subsequent arrivals
-     * @param isOutside True if the Location is outside the cave, false otherwise
+     * Overloaded constructor without numMonsters. automatically sets Location to have 0 monsters.
+     * @param initialMessage Message to print the first time Player arrives.
+     * @param returnMessage Message to print at subsequent arrivals.
+     * @param isOutside True if the Location is outside the cave, false otherwise.
      */
     public Location(String initialMessage, String returnMessage, boolean isOutside){
         this(initialMessage, returnMessage, isOutside, 0);
     }
 
     /**
-     * Getter for numMonsters
-     * @return Number of monsters at the Location
+     * Getter for numMonsters.
+     * @return Number of monsters at the Location.
      */
     public int getNumMonsters(){
         return this.numMonsters;
     }
 
     /**
-     * Setter for numMonsters
-     * @param num Number of monsters to set at the Location
+     * Setter for numMonsters.
+     * @param num Number of monsters to set at the Location.
      */
     public void setNumMonsters(int num){
         this.numMonsters = num;
     }
 
     /**
-     * Getter for isOutside
-     * @return True if the Location is outside the cave, false otherwise
+     * Getter for isOutside.
+     * @return True if the Location is outside the cave, false otherwise.
      */
     public boolean isOutside(){
         return this.isOutside;
@@ -67,7 +67,7 @@ public class Location {
 
     /**
      * Prints an appropriate message for Player's arrival, depending on whether the Location has been visited before.
-     * If visiting for the first time, sets hasBeenVisited to true
+     * If visiting for the first time, sets hasBeenVisited to true.
      */
     public void printArrivalMessage(){
         if (this.hasBeenVisited){
@@ -82,17 +82,17 @@ public class Location {
     }
 
     /**
-     * Returns true if the given Grabbable is in the Location's inventory, false otherwise
-     * @param item Grabbable to check status of
-     * @return True if item is in inventory, false otherwise
+     * Returns true if the given Grabbable is in the Location's inventory, false otherwise.
+     * @param item Grabbable to check status of.
+     * @return True if item is in inventory, false otherwise.
      */
     public boolean hasInInventory(Grabbable item){
         return this.inventory.contains(item);
     }
 
     /**
-     * Adds the given Grabbable to the Location's inventory
-     * @param item Grabbable to be added to inventory
+     * Adds the given Grabbable to the Location's inventory.
+     * @param item Grabbable to be added to inventory.
      */
     public void addToInventory(Grabbable item){
         if (this.hasInInventory(item)){
@@ -103,8 +103,8 @@ public class Location {
     }
 
     /**
-     * Removes the given Grabbable from the Location's inventory
-     * @param item Grabbable to remove from inventory
+     * Removes the given Grabbable from the Location's inventory.
+     * @param item Grabbable to remove from inventory.
      */
     public void removeFromInventory(Grabbable item){
         if (this.hasInInventory(item)){
@@ -115,8 +115,8 @@ public class Location {
     }
 
     /**
-     * Decreases number of monsters by the given amount, if possible
-     * @param numKilled Number of monsters to kill
+     * Decreases number of monsters by the given amount, if possible.
+     * @param numKilled Number of monsters to kill.
      */
     public void killMonsters(int numKilled){
         if (numKilled < 0){

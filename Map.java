@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 /**
- * Stores the game's layout in a 2D ArrayList of Locations
- * @author Greta Wang, Diane Tuyizere, Alexa Huayta
- * @version 12/11/2025
+ * Stores the game's layout in a 2D ArrayList of Locations.
+ * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
+ * @version 12/11/2025.
  */
 public class Map {
     private int nColumns;
@@ -11,9 +11,9 @@ public class Map {
     private Location emptySpace = new Location("a", "b", false);
 
     /**
-     * Constructor 
-     * @param nColumns Number of columns on the map
-     * @param nRows Number of rows on the map
+     * Constructor.
+     * @param nColumns Number of columns on the map.
+     * @param nRows Number of rows on the map.
      */
     public Map(int nColumns, int nRows){
         this.nColumns = nColumns;
@@ -28,9 +28,9 @@ public class Map {
     }
 
     /**
-     * Returns true if the given Location is on the Map, false otherwise
-     * @param location Location to check status of
-     * @return True if location is on map, false otherwise
+     * Returns true if the given Location is on the Map, false otherwise.
+     * @param location Location to check status of.
+     * @return True if location is on map, false otherwise.
      */
     public boolean hasLocation(Location location){
         int numOccurrences = 0;
@@ -43,10 +43,10 @@ public class Map {
     }
 
     /**
-     * Adds the given Location to the Map at the specified position, unless it is already on the Map
-     * @param location Location to add to Map
-     * @param column Column number to add Location at
-     * @param row Row number to add Location at
+     * Adds the given Location to the Map at the specified position, unless it is already on the Map.
+     * @param location Location to add to Map.
+     * @param column Column number to add Location at.
+     * @param row Row number to add Location at.
      */
     public void add(Location location, int column, int row){
         if (this.hasLocation(location)){
@@ -59,9 +59,9 @@ public class Map {
     }
 
     /**
-     * Returns the row number where the given Location is located on the Map
-     * @param location Location to get row for
-     * @return Row number of the Location
+     * Returns the row number where the given Location is located on the Map.
+     * @param location Location to get row for.
+     * @return Row number of the Location.
      */
     public int getRow(Location location){
         if (this.hasLocation(location)){
@@ -78,9 +78,9 @@ public class Map {
     }
 
     /**
-     * Returns the column number where the given Location is located on the Map
-     * @param location Location to get column for
-     * @return Column number of the Location
+     * Returns the column number where the given Location is located on the Map.
+     * @param location Location to get column for.
+     * @return Column number of the Location.
      */
     public int getColumn(Location location){
         int row = this.getRow(location);
@@ -88,10 +88,10 @@ public class Map {
     }
 
     /**
-     * Given a Location on the Map and a direction, returns the adjacent Location in that direction, or throws a RuntimeException if there is none
-     * @param oldLocation Location to move from
-     * @param userInput String indicating direction to move in
-     * @return Adjacent Location in the specified direction
+     * Given a Location on the Map and a direction, returns the adjacent Location in that direction, or throws a RuntimeException if there is none.
+     * @param oldLocation Location to move from.
+     * @param userInput String indicating direction to move in.
+     * @return Adjacent Location in the specified direction.
      */
     public Location getNewLocation(Location oldLocation, String userInput){
         int row = this.getRow(oldLocation);
