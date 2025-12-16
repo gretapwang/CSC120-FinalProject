@@ -7,6 +7,8 @@
  - A map of your game's layout (if applicable)
  - `cheatsheet.md`
  - Completed `rubric.md`
+ ## Reflection
+ This project has been a room for us to practice what we have been learning in class not only limited to the use of encapsulation , inheritance, etc  but also being a wider room for learning new skills for both coding and working in a team in a more engaging and collaborative environment. Amongst them the emphasis would be on being challenged on how to collaborate on codes while working on different computers at different times.  This has been solved by the use of branching and merging which has allowed us to work better together regardless of the time and settings.
 
 
 ## Additional Reflection Questions
