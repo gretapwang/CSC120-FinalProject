@@ -1,13 +1,13 @@
 /**
- * this is the footprint of the grabbable items in the game
- * @author Greta Wang, Diane Tuyizere, Alexa Huayta
- * @version 12/11/2025
+ * this is the footprint of the grabbable items in the game.
+ * @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
+ * @version 12/11/2025.
  */
 public class Grabbable {
 
     protected String name;
 
-    // fixed some spacing - Greta
+
 
     /**
     * the constructor
@@ -18,8 +18,8 @@ public class Grabbable {
     }
 
     /**
-    * the getter method to help accessing the name
-    * @return the item's name
+    * the getter method to help accessing the name.
+    * @return the item's name.
     */
     public String getName() {
         return this.name;

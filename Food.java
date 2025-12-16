@@ -1,7 +1,7 @@
 /**  
 * The class Food extends the Grabbable class to create food objects that give the player energy when food is eaten.
-* @author [Greta Wang, Diane Tuyizere, Alexandra Huayta]
-* @version December 11, 2025
+* @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
+* @version 12/11/25.
 */
 public class Food extends Grabbable {
     /** The attribute private int EnergyGain is a instance variable that stores the quantity of energy the food provides. */
@@ -20,8 +20,8 @@ public class Food extends Grabbable {
         this.energyGain = energyGain;
     }
 
-    // fixed spacing
 
+    
     /** 
     * getEnergyGain method returns the energy gain value of the food item when called.
     * @return the amount of energy the food gives to the player. 

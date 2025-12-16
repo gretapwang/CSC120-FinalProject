@@ -1,7 +1,7 @@
 /** 
 * The class WaterBottle extends the Grabbable class to create water bottle object that gives the player energy when water is drunk.
-* @author [Greta Wang, Diane Tuyizere, Alexandra Huayta]
-* @version December 11, 2025
+* @author Greta Wang, Diane Tuyizere, Alexandra Huayta.
+* @version 12/11/2025.
  */
 
 public class WaterBottle extends Grabbable {
@@ -55,7 +55,7 @@ public class WaterBottle extends Grabbable {
     /** 
     * emptyOut method makes the water bottle empty when called.
     */
-    public void emptyOut(){   // removed an extraneous @return from javadoc header for this method
+    public void emptyOut(){   
         this.isFull = false;
     }
 
@@ -63,7 +63,7 @@ public class WaterBottle extends Grabbable {
     * open method opens the water bottle when called if the player is holding the water bottle.
     * @param player the player object that is trying to open the water bottle.
     */
-    public void open(Player player){  // description and @param were listed in wrong order in header, i just switched them. same for close() - greta
+    public void open(Player player){  
         if (player.isHolding(this)){
             if (this.isOpen){
                 throw new RuntimeException("The water bottle is already open.");
